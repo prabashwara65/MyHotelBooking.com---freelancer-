@@ -40,14 +40,14 @@ session_start();
         <div class="dashboard-title">Dashboard</div>
         <div class="top-right">
         <div class="auth-buttons">
-                <?php if (isset($_SESSION['name'])): ?>
-                    <span class="welcome-msg">Welcome, <?= htmlspecialchars($_SESSION['name']) ?></span>
-                    <a href="/myhotelbooking.com/Auth/logout.php" class="logout-btn">Logout</a>
-                <?php else: ?>
-                    <a href="/myhotelbooking.com/Auth/login.html" class="btn">Login</a>
-                    <a href="/myhotelbooking.com/Auth/register.php" class="btn">Sign Up</a>
-                <?php endif; ?>
-            </div>
+                    <?php if (isset($_SESSION['name'])): ?>
+                        <span class="welcome-msg">Welcome, <?= htmlspecialchars($_SESSION['name']) ?></span>
+                        <a href="/myhotelbooking.com/Auth/logout.php" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    <?php else: ?>
+                        <a href="/myhotelbooking.com/Auth/login.html" class="btn">Login</a>
+                        <a href="/myhotelbooking.com/Auth/register.php" class="btn">Sign Up</a>
+                    <?php endif; ?>
+                </div>
         </div>
     </div>
 

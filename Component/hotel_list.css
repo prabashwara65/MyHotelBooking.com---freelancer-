@@ -1,0 +1,121 @@
+/* ===== Hotel Grid ===== */
+.hotel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+
+.hotel-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+}
+
+.hotel-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.hotel-img {
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+}
+
+.hotel-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.hotel-card:hover .hotel-img img {
+    transform: scale(1.05);
+}
+
+.hotel-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--secondary);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.eco-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--eco-green);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.hotel-info {
+    padding: 1.2rem;
+}
+
+.hotel-info h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.hotel-location {
+    color: var(--gray);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.hotel-location i {
+    margin-right: 5px;
+    color: var(--primary);
+}
+
+.hotel-description {
+    margin-bottom: 1rem;
+    color: var(--gray);
+    font-size: 0.9rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.hotel-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rating {
+    background: var(--primary);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.price {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.price span {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--gray);
+}
+
+/* Add any additional styling you need */

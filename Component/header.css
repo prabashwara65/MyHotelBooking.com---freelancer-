@@ -1,0 +1,52 @@
+
+.logout-btn {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 50px;
+    background-color: #ff4747; /* Red color for logout */
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+
+.logout-btn:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #fff;
+    top: 0;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.4s ease;
+}
+
+.logout-btn:hover:before {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+.logout-btn i {
+    margin-right: 8px;
+    font-size: 18px; /* Font icon size */
+}
+
+/* Optional: For Icon Inside Button */
+.logout-btn i {
+    font-size: 20px;
+    transition: transform 0.3s ease;
+}
+
+/* When hovering the logout button, icon zooms */
+.logout-btn:hover i {
+    transform: scale(1.1);
+}
+

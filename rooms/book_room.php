@@ -122,6 +122,7 @@ include('../Component/header.php');
                     <li><i class="fas fa-eye-slash text-gray-600 mr-2"></i>No Hidden Charges</li>
                     <li><i class="fas fa-headset text-indigo-600 mr-2"></i>24/7 Customer Support</li>
                     <li><i class="fas fa-users text-pink-500 mr-2"></i>Trusted by Thousands</li>
+                    <li><i class="fas fa-clock text-orange-500 mr-2"></i>Early Check-in & Late Check-out</li>
                 </ul>
             </div>
         </div>

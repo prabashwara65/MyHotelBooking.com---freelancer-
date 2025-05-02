@@ -29,95 +29,85 @@ $row = $result->fetch_assoc();
     <style>
         .hotel-banner img {
             width: 100%;
-            height: 450px;
+            height: 400px;
             object-fit: cover;
+        }
+        .badge-custom {
+            margin-right: 10px;
+            font-size: 0.9rem;
         }
         .card-img-top {
             height: 200px;
             object-fit: cover;
         }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-        .btn-book-now {
-            background: linear-gradient(to right, #ff7e5f, #feb47b);
-            color: white;
-        }
-        .btn-book-now:hover {
-            background: linear-gradient(to right, #feb47b, #ff7e5f);
-        }
-        .feature-card {
-            transition: transform 0.3s ease-in-out;
-        }
-        .feature-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
     </style>
 </head>
-<body class="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white">
+<?php
+    // Include the header
+    include('../Component/header.php');
+    ?>
+<body class="bg-gray-100 text-gray-800 p-4">
 
-<div class="container mx-auto mt-10 px-4">
-    <div class="hotel-banner mb-8">
-        <img src="<?php echo $row['image_url']; ?>" alt="<?php echo htmlspecialchars($row['hotel_name']); ?>" class="rounded-lg shadow-xl">
-    </div>
-
-    <div class="text-center mb-8">
-        <h2 class="text-4xl font-extrabold text-white"><?php echo htmlspecialchars($row['hotel_name']); ?></h2>
-        <p class="text-lg mt-2"><i class="fas fa-map-marker-alt text-red-300 mr-2"></i><?php echo htmlspecialchars($row['location']); ?></p>
-
-        <div class="mt-4">
-            <?php if ($row['is_best_seller']): ?>
-                <span class="inline-block bg-green-600 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg">Best Seller</span>
-            <?php endif; ?>
-            <?php if ($row['is_eco_certified']): ?>
-                <span class="inline-block bg-blue-500 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg">Eco Certified</span>
-            <?php endif; ?>
+<div class="container mx-auto mt-6 px-4 ">
+    <div class="flex justify-between gap-5">
+        <div class="hotel-banner mb-6 w-2/3 ">
+            <img src="<?php echo $row['image_url']; ?>" alt="<?php echo htmlspecialchars($row['hotel_name']); ?>" class="rounded-lg shadow-lg">
         </div>
 
-        <p class="mt-4 text-2xl font-semibold">Rating: <?php echo $row['rating']; ?> ★</p>
-        <p class="text-xl font-medium mt-2">Price: AED <?php echo $row['price']; ?> / night</p>
+        <div class="w-1/3 bg-white p-8 rounded-2xl h-[400px]">
+        <h2 class="text-3xl font-semibold text-gray-900"><?php echo htmlspecialchars($row['hotel_name']); ?></h2>
+            <p class="text-lg text-gray-600 mt-2"><i class="fas fa-map-marker-alt text-red-500 mr-2"></i><?php echo htmlspecialchars($row['location']); ?></p>
+
+            <div class="mt-3">
+                <?php if ($row['is_best_seller']): ?>
+                    <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Best Seller</span>
+                <?php endif; ?>
+                <?php if ($row['is_eco_certified']): ?>
+                    <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Eco Certified</span>
+                <?php endif; ?>
+            </div>
+            <p class="mt-4 text-xl font-medium">Rating: <?php echo $row['rating']; ?> ★</p>
+            <p class="text-xl font-medium mt-2">Price: AED <?php echo $row['price']; ?> / night</p>
+            <p class="text-xl font-extralight mt-4 text-gray-600"> <?php echo $row['description']; ?> / night</p>
+        </div>
     </div>
 
-    <!-- Features Section -->
-    <div class="mt-10">
-        <h3 class="text-3xl text-center font-semibold mb-6">Features</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <?php 
-            $features = explode(',', $row['features']);
-            foreach ($features as $feature): 
-            ?>
-                <div class="feature-card bg-white p-6 rounded-lg shadow-xl hover:scale-105 transition-all">
-                    <div class="flex items-center justify-center mb-4">
-                        <i class="fas fa-check-circle text-green-500 text-3xl"></i>
+    <div class="mb-6">
+        
+
+        <div class="mt-6">
+            <h4 class="text-2xl font-semibold text-gray-800">Features</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+                <?php 
+                $features = explode(',', $row['features']);
+                foreach ($features as $feature): 
+                ?>
+                    <div class="bg-white p-4 rounded-lg shadow-md text-center">
+                        <i class="fas fa-check-circle text-green-500 text-2xl mb-2"></i>
+                        <p class="text-gray-700"><?php echo trim($feature); ?></p>
                     </div>
-                    <p class="text-gray-700 text-xl font-medium text-center"><?php echo trim($feature); ?></p>
-                </div>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
+            </div>
         </div>
-    </div>
 
-    <!-- Room Types Section -->
-    <div class="mt-10">
-        <h3 class="text-3xl text-center font-semibold mb-6">Available Room Types</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <?php 
-            $roomTypes = explode(',', $row['room_types']);
-            foreach ($roomTypes as $index => $room): 
-                $roomImage = "/myhotelbooking.com/images/rooms/" . strtolower(str_replace(' ', '_', trim($room))) . ".jpg";
-            ?>
-                <div class="card bg-white p-6 rounded-lg shadow-lg transition-transform transform hover:scale-105">
-                    <img src="<?php echo $roomImage; ?>" alt="<?php echo trim($room); ?>" class="rounded-lg w-full h-48 object-cover mb-4">
-                    <h5 class="text-2xl font-semibold text-gray-800"><?php echo trim($room); ?></h5>
-                    <a href="/myhotelbooking.com/rooms/book_room.php?hotel_id=<?php echo $hotelId; ?>&room=<?php echo urlencode(trim($room)); ?>" class="btn-book-now mt-4 px-6 py-2 rounded-lg text-center hover:bg-gradient-to-l transition duration-300">Book Now</a>
-                </div>
-            <?php endforeach; ?>
+        <div class="mt-6">
+            <h4 class="text-2xl font-semibold text-gray-800">Available Room Types</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+                <?php 
+                $roomTypes = explode(',', $row['room_types']);
+                foreach ($roomTypes as $index => $room): 
+                    $roomImage = "/myhotelbooking.com/images/rooms/" . strtolower(str_replace(' ', '_', trim($room))) . ".jpg";
+                ?>
+                    <div class="bg-white p-4 rounded-lg shadow-md">
+                        <img src="<?php echo $roomImage; ?>" alt="<?php echo trim($room); ?>" class="rounded-lg w-full h-48 object-cover mb-4">
+                        <h5 class="text-xl font-semibold text-gray-800"><?php echo trim($room); ?></h5>
+                        <a href="/myhotelbooking.com/rooms/book_room.php?hotel_id=<?php echo $hotelId; ?>&room=<?php echo urlencode(trim($room)); ?>" class="mt-3 inline-block bg-blue-500 text-white px-4 py-2 rounded-lg text-center hover:bg-blue-600 transition duration-300">Book Now</a>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         </div>
-    </div>
 
-    <div class="text-center mt-10">
-        <a href="hotel_list.php" class="bg-gray-800 text-white px-6 py-3 rounded-full text-lg hover:bg-gray-700 transition duration-300">← Back to List</a>
+        <a href="hotel_list.php" class="mt-6 inline-block bg-gray-500 text-white px-4 py-2 rounded-lg text-center hover:bg-gray-600 transition duration-300">← Back to List</a>
     </div>
 </div>
 

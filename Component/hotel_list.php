@@ -49,7 +49,7 @@ if ($result->num_rows > 0) {
         echo '<div class="rating">' . $row['rating'] . ' ★</div>';
         echo '<div class="price">AED ' . $row['price'] . ' <span>/ night</span></div>';
         echo '</div>';
-        echo '<a href="' . $row['link'] . '" class="btn btn-primary mt-2">View Hotel</a>';
+        echo '<a href="/myhotelbooking.com/hotels/hotel_details.php?id=' . $row['id'] . '" class="btn btn-primary mt-2">View Hotel</a>';
         echo '</div>';
         echo '</div>';
     }

@@ -1,7 +1,14 @@
 <?php
+
 session_start();
 // Example: Assume user logs in somewhere and $_SESSION['username'] is set
+
 ?>
+
+<pre>
+<?php print_r($_SESSION); ?>
+</pre>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,8 +36,8 @@ session_start();
                     <a href="#">About</a>
                 </div>
                 <div class="auth-buttons">
-                    <?php if (isset($_SESSION['username'])): ?>
-                        <span class="welcome-msg">Welcome, <?= htmlspecialchars($_SESSION['username']) ?></span>
+                    <?php if (isset($_SESSION['name'])): ?>
+                        <span class="welcome-msg">Welcome, <?= htmlspecialchars($_SESSION['name']) ?></span>
                         <a href="/myhotelbooking.com/Auth/logout.php" class="btn">Logout</a>
                     <?php else: ?>
                         <a href="/myhotelbooking.com/Auth/login.html" class="btn">Login</a>

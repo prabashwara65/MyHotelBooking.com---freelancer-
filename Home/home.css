@@ -373,3 +373,12 @@ footer {
     color: #aaa;
     font-size: 0.9rem;
 }
+
+.welcome-msg {
+    margin-right: 1rem;
+    color: white;
+    font-weight: bold;
+}
+.auth-buttons a {
+    margin-left: 0.5rem;
+}

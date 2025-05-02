@@ -1,5 +1,8 @@
 <?php
 // Start the session
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
 
 // Connect to the database
@@ -28,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // If there are no errors, attempt to log the user in
     if (empty($email_err) && empty($password_err)) {
         // Prepare a SQL query to check the user's credentials
-        $sql = "SELECT id, email, password FROM users WHERE email = ?";
+        $sql = "SELECT id, name, email, password FROM users WHERE email = ?";
 
         if ($stmt = $conn->prepare($sql)) {
             // Bind the email parameter to the SQL query
@@ -44,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Check if the email exists in the database
                 if ($stmt->num_rows == 1) {
                     // Bind the result to variables
-                    $stmt->bind_result($id, $email, $stored_password);
+                    $stmt->bind_result($id, $name, $email, $stored_password);
 
                     if ($stmt->fetch()) {
                         // Check if the password is correct (without hashing)
@@ -56,6 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $_SESSION["loggedin"] = true;
                             $_SESSION["id"] = $id;
                             $_SESSION["email"] = $email;
+                            $_SESSION["name"] = $name;
 
                             // Redirect the user to their bookings page
                             header("location: /myhotelbooking.com/home/home.php");

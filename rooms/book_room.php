@@ -55,7 +55,36 @@ include('../Component/header.php');
 </div>
 
 <body class="bg-gradient-to-r from-blue-50 via-white to-purple-50 min-h-screen">
-    
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const qtyInput = document.getElementById('roomQty');
+        const price = <?php echo $roomData['price']; ?>;
+        const taxRate = 0.05;
+        const AED_TO_USD = 0.27;
+
+        const hotelId = <?php echo json_encode($hotelId); ?>;
+        const roomType = <?php echo json_encode($roomType); ?>;
+
+        let totalPrice = 0;
+
+        function updatePrice() {
+            const qty = parseInt(qtyInput.value) || 1;
+            const tax = qty * price * taxRate;
+            totalPrice = qty * price + tax;
+            const usd = totalPrice * AED_TO_USD;
+
+            document.getElementById('taxAmount').textContent = tax.toFixed(2);
+            document.getElementById('totalPrice').textContent = totalPrice.toFixed(2);
+            document.getElementById('usdPrice').textContent = usd.toFixed(2);
+
+            document.getElementById('bookingLink').href =
+                `/myhotelbooking.com/checkout/checkout.php?hotel_id=${hotelId}&room=${encodeURIComponent(roomType)}&total=${totalPrice.toFixed(2)}`;
+        }
+
+        qtyInput.addEventListener('input', updatePrice);
+        updatePrice();
+    });
+</script>
 
 <div class="max-w-7xl mx-auto px-4 py-10">
     <!-- Hotel Header -->
@@ -105,10 +134,12 @@ include('../Component/header.php');
                     <p><strong>Total in USD:</strong> $<span id="usdPrice">0.00</span> <small class="text-gray-400">(Approx)</small></p>
                 </div>
 
-                <a href="book_now.php?hotel_id=<?php echo $hotelId; ?>&room=<?php echo urlencode($roomType); ?>"
-                   class="mt-5 block bg-indigo-600 hover:bg-indigo-700 text-white text-center py-2 px-4 rounded-lg font-semibold transition">
-                    <i class="fas fa-arrow-right mr-2"></i>Proceed to Book
-                </a>
+                <a id="bookingLink"
+   class="mt-5 block bg-indigo-600 hover:bg-indigo-700 text-white text-center py-2 px-4 rounded-lg font-semibold transition">
+    <i class="fas fa-arrow-right mr-2"></i>Proceed to Book
+</a>
+
+
             </div>
 
             <!-- Why Book With Us -->
@@ -129,25 +160,6 @@ include('../Component/header.php');
     </div>
 </div>
 
-<script>
-    const qtyInput = document.getElementById('roomQty');
-    const price = <?php echo $roomData['price']; ?>;
-    const taxRate = 0.05;
-    const AED_TO_USD = 0.27; // Approximate static exchange rate
 
-    function updatePrice() {
-        const qty = parseInt(qtyInput.value) || 1;
-        const tax = qty * price * taxRate;
-        const total = qty * price + tax;
-        const usd = total * AED_TO_USD;
-
-        document.getElementById('taxAmount').textContent = tax.toFixed(2);
-        document.getElementById('totalPrice').textContent = total.toFixed(2);
-        document.getElementById('usdPrice').textContent = usd.toFixed(2);
-    }
-
-    qtyInput.addEventListener('input', updatePrice);
-    window.addEventListener('load', updatePrice);
-</script>
 </body>
 </html>

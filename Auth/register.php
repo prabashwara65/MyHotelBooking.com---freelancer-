@@ -1,5 +1,10 @@
 <?php
-include 'db.php'; // Connect to the database
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1); 
+
+// Connect to the database
+include '../db.php'; 
 
 $registrationMessage = "";
 
@@ -7,11 +12,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $name = $conn->real_escape_string($_POST['name']);
   $email = $conn->real_escape_string($_POST['email']);
   $phone = $conn->real_escape_string($_POST['phone']);
-  $password = password_hash($_POST['password'], PASSWORD_BCRYPT); // Securely hash password
+  
+  // Store password as plain text (Not recommended for production)
+  $password = $_POST['password'];
 
   // Insert into users table
   $sql = "INSERT INTO users (name, email, phone, password) VALUES (?, ?, ?, ?)";
   $stmt = $conn->prepare($sql);
+  if (!$stmt) {
+    die('Prepare failed: ' . $conn->error);
+  }
+
   $stmt->bind_param("ssss", $name, $email, $phone, $password);
 
   if ($stmt->execute()) {
@@ -29,70 +40,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
   <title>User Registration</title>
   <style>
-    body {
-      background: #f0f2f5;
-      font-family: Arial, sans-serif;
-    }
+    /* Your CSS styles here */
+    /* ===== Global Styles ===== */
+    :root {
+            --primary: #4361ee;
+            --primary-dark: #3a0ca3;
+            --secondary: #f72585;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --eco-green: #2ecc71;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
 
-    .container {
-      width: 100%;
-      max-width: 400px;
-      margin: 80px auto;
-      padding: 30px;
-      background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    h2 {
-      text-align: center;
-      margin-bottom: 25px;
-      color: #333;
-    }
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
 
-    label {
-      font-weight: bold;
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="password"] {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      box-sizing: border-box;
-    }
-
-    button {
-      width: 100%;
-      padding: 10px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
-
-    .success {
-      color: green;
-      text-align: center;
-      margin-bottom: 15px;
-    }
-
-    .error {
-      color: red;
-      text-align: center;
-      margin-bottom: 15px;
-    }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
   </style>
 </head>
 <body>

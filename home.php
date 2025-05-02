@@ -421,8 +421,8 @@
                     <a href="#">About</a>
                 </div>
                 <div class="auth-buttons">
-                    <a href="#" class="btn"> <a href="login.html">   Login </a>
-                    <a href="login.html" class="btn"> Sign Up</a>
+                    <a href="#" class="btn"> <a href="/myhotelbooking.com/Auth/login.html">   Login </a>
+                    <a href="/myhotelbooking.com/Auth/register.php" class="btn"> Sign Up</a>
                 </div>
             </nav>
         </div>

@@ -96,7 +96,8 @@ $row = $result->fetch_assoc();
                         <div class="card-body">
                             <h5 class="card-title"><?php echo trim($room); ?></h5>
 
-                            <a href="book_room.php?room=<?php echo urlencode(trim($room)); ?>" class="btn btn-primary mt-3">Book Now</a>
+                            <a href="/myhotelbooking.com/rooms/book_room.php?hotel_id=<?php echo $hotelId; ?>&room=<?php echo urlencode(trim($room)); ?>" class="btn btn-primary mt-3">Book Now</a>
+
                         </div>
                     </div>
                 </div>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotels | MyHotelBooking</title>
-    <link rel="stylesheet" href="hotel_list.css">
+    <link rel="stylesheet" href="hotels.css">
     <style>
         
     </style>

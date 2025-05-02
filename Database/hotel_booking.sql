@@ -34,7 +34,9 @@ CREATE TABLE `bookings` (
   `customer_email` varchar(100) DEFAULT NULL,
   `check_in_date` date DEFAULT NULL,
   `check_out_date` date DEFAULT NULL,
-  `num_guests` int(11) DEFAULT NULL,
+  `num_nights` int(11) DEFAULT NULL,
+  `num_rooms` int(11) DEFAULT NULL,
+  `total` int(11) DEFAULT NULL,
   `special_requests` text DEFAULT NULL,
   `booking_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

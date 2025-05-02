@@ -58,6 +58,7 @@ include('../Component/header.php');
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const qtyInput = document.getElementById('roomQty');
+        const nightsInput = document.getElementById('nightsQty');
         const price = <?php echo $roomData['price']; ?>;
         const taxRate = 0.05;
         const AED_TO_USD = 0.27;
@@ -69,8 +70,9 @@ include('../Component/header.php');
 
         function updatePrice() {
             const qty = parseInt(qtyInput.value) || 1;
-            const tax = qty * price * taxRate;
-            totalPrice = qty * price + tax;
+            const nights = parseInt(nightsInput.value) || 1; // Nights input
+            const tax = qty * nights * price * taxRate;
+            totalPrice = qty * nights * price + tax;
             const usd = totalPrice * AED_TO_USD;
 
             document.getElementById('taxAmount').textContent = tax.toFixed(2);
@@ -78,10 +80,11 @@ include('../Component/header.php');
             document.getElementById('usdPrice').textContent = usd.toFixed(2);
 
             document.getElementById('bookingLink').href =
-                `/myhotelbooking.com/checkout/checkout.php?hotel_id=${hotelId}&room=${encodeURIComponent(roomType)}&total=${totalPrice.toFixed(2)}`;
+                `/myhotelbooking.com/checkout/checkout.php?hotel_id=${hotelId}&room=${encodeURIComponent(roomType)}&total=${totalPrice.toFixed(2)}&nights=${nights}&qtyRooms=${qty}`;
         }
 
         qtyInput.addEventListener('input', updatePrice);
+        nightsInput.addEventListener('input', updatePrice);
         updatePrice();
     });
 </script>
@@ -119,28 +122,76 @@ include('../Component/header.php');
         <!-- Booking and Price Section -->
         <div class="w-full md:w-[30%] space-y-6">
             <!-- Price Calculator -->
-            <div class="bg-white shadow-xl rounded-xl p-6">
-                <h3 class="text-xl font-bold mb-4 text-gray-800">
-                    <i class="fas fa-calculator mr-2 text-blue-600"></i>Price Calculator
-                </h3>
-                <label for="roomQty" class="block mb-2 text-gray-700 font-medium">Number of Rooms:</label>
-                <input type="number" id="roomQty" value="1" min="1"
-                       class="w-full border border-gray-300 rounded-md px-3 py-2 mb-4 focus:ring-2 focus:ring-blue-400">
+        <div class="bg-white shadow-xl rounded-xl p-6">
+            <h3 class="text-xl font-bold mb-4 text-gray-800">
+                <i class="fas fa-calculator mr-2 text-blue-600"></i>Price Calculator
+            </h3>
+            <!-- Number of Rooms Input -->
+            <label for="roomQty" class="block mb-2 text-gray-700 font-medium">Number of Rooms:</label>
+            <input type="number" id="roomQty" value="1" min="1"
+                class="w-full border border-gray-300 rounded-md px-3 py-2 mb-4 focus:ring-2 focus:ring-blue-400">
 
-                <div class="space-y-2 text-sm text-gray-600">
-                    <p><strong>Price per Night:</strong> AED <?php echo number_format($roomData['price'], 2); ?></p>
-                    <p><strong>Tax (5%):</strong> AED <span id="taxAmount">0.00</span></p>
-                    <p><strong>Total Price:</strong> AED <span id="totalPrice">0.00</span></p>
-                    <p><strong>Total in USD:</strong> $<span id="usdPrice">0.00</span> <small class="text-gray-400">(Approx)</small></p>
-                </div>
+            <!-- Number of Nights Input -->
+            <label for="nightsQty" class="block mb-2 text-gray-700 font-medium">Number of Nights:</label>
+            <input type="number" id="nightsQty" value="1" min="1"
+                class="w-full border border-gray-300 rounded-md px-3 py-2 mb-4 focus:ring-2 focus:ring-blue-400">
 
-                <a id="bookingLink"
-   class="mt-5 block bg-indigo-600 hover:bg-indigo-700 text-white text-center py-2 px-4 rounded-lg font-semibold transition">
-    <i class="fas fa-arrow-right mr-2"></i>Proceed to Book
-</a>
-
-
+            <!-- Price Breakdown -->
+            <div class="space-y-2 text-sm text-gray-600">
+                <p><strong>Price per Night:</strong> AED <?php echo number_format($roomData['price'], 2); ?></p>
+                <p><strong>Tax (5%):</strong> AED <span id="taxAmount">0.00</span></p>
+                <p><strong>Total Price:</strong> AED <span id="totalPrice">0.00</span></p>
+                <p><strong>Total in USD:</strong> $<span id="usdPrice">0.00</span> <small class="text-gray-400">(Approx)</small></p>
             </div>
+
+            <a id="bookingLink"
+                class="mt-5 block bg-indigo-600 hover:bg-indigo-700 text-white text-center py-2 px-4 rounded-lg font-semibold transition">
+                <i class="fas fa-arrow-right mr-2"></i>Proceed to Book
+            </a>
+        </div>
+
+        <script>
+            // Initial variables for the price and currency conversion
+            const pricePerNight = <?php echo $roomData['price']; ?>; // Get room price from PHP
+            const usdExchangeRate = 0.27; // Example conversion rate (AED to USD)
+
+            // Get elements for calculation updates
+            const roomQtyInput = document.getElementById('roomQty');
+            const nightsQtyInput = document.getElementById('nightsQty');
+            const taxAmountElement = document.getElementById('taxAmount');
+            const totalPriceElement = document.getElementById('totalPrice');
+            const usdPriceElement = document.getElementById('usdPrice');
+
+            // Function to calculate price based on rooms, nights, and tax
+            function calculatePrice() {
+                const roomQty = parseInt(roomQtyInput.value);
+                const nightsQty = parseInt(nightsQtyInput.value);
+                
+                // Calculate total price before tax
+                const subtotal = roomQty * nightsQty * pricePerNight;
+
+                // Calculate tax (5%)
+                const taxAmount = subtotal * 0.05;
+
+                // Calculate total price after tax
+                const totalPrice = subtotal + taxAmount;
+
+                // Convert total price to USD (using exchange rate)
+                const usdPrice = totalPrice * usdExchangeRate;
+
+                // Update the HTML elements with calculated values
+                taxAmountElement.textContent = taxAmount.toFixed(2);
+                totalPriceElement.textContent = totalPrice.toFixed(2);
+                usdPriceElement.textContent = usdPrice.toFixed(2);
+            }
+
+            // Add event listeners for changes in the input fields
+            roomQtyInput.addEventListener('input', calculatePrice);
+            nightsQtyInput.addEventListener('input', calculatePrice);
+
+            // Call the calculatePrice function on page load to initialize values
+            calculatePrice();
+        </script>
 
             <!-- Why Book With Us -->
             <div class="bg-white shadow-xl rounded-xl p-6">

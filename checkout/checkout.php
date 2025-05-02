@@ -17,14 +17,23 @@
 include('../Component/header.php');
 include '../db.php';
 
+
 // Start the session
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+// Get data from query parameters
 $hotelId = $_GET['hotel_id'] ?? null;
 $room = $_GET['room'] ?? null;
 $total = $_GET['total'] ?? null;
+$nights = $_GET['nights'] ?? null; 
+$qtyRooms = $_GET['qtyRooms'] ?? null;
+// $CheckInDate = $_GET['check_in_date'] ?? null; 
+// $CheckOutDate = $_GET['check_out_date'] ?? null;
+
+
+
 
 if (!$hotelId || !$room || !$total) {
     die("Missing booking data.");
@@ -60,10 +69,16 @@ if ($result->num_rows > 0) {
   <div class="w-2/3 bg-white rounded-2xl shadow-lg p-8">
     <h2 class="text-2xl font-semibold mb-6 text-gray-800">Card Payment Details</h2>
 
-    <form method="POST" action="process_checkout.php" class="space-y-5">
+    <form method="POST" action="/myhotelbooking.com/checkout/process_checkout.php" class="space-y-5">
       <input type="hidden" name="hotel_id" value="<?php echo $hotelId; ?>">
       <input type="hidden" name="nights" value="<?php echo $nights; ?>">
-      <input type="hidden" name="total" value="<?php echo $total; ?>">
+      <input type="hidden" name="total" value="<?php echo $total * 0.27; ?>">
+      <input type="hidden" name="room" value="<?php echo $room; ?>">
+      <input type="hidden" name="qtyRooms" value="<?php echo $qtyRooms; ?>">
+      <input type="hidden" name="check_in_date" value="<?php echo $CheckInDate; ?>">
+      <input type="hidden" name="check_out_date" value="<?php echo $CheckOutDate; ?>">
+
+      
 
       <div>
         <label class="block text-gray-600 mb-1 flex items-center gap-2">
@@ -94,12 +109,32 @@ if ($result->num_rows > 0) {
         <input type="text" name="cardholder_name" class="w-full border border-gray-300 rounded-lg p-3" required>
       </div>
 
+   
+
       <div>
         <label class="block text-gray-600 mb-1 flex items-center gap-2">
           <i data-feather="map-pin"></i> Billing Address
         </label>
         <textarea name="billing_address" rows="3" class="w-full border border-gray-300 rounded-lg p-3" required></textarea>
       </div>
+
+      <!-- New Section: Date Picker -->
+        <div class="mt-6 border-t pt-4 space-y-2">
+        <div class="flex flex-row gap-4">
+            <div class="flex-1">
+            <label for="check_in_date" class="block text-gray-600 mb-1">Check-in Date</label>
+            <input type="date" id="check_in_date" name="check_in_date"
+                    value="<?php echo htmlspecialchars($CheckInDate); ?>"
+                    class="w-full border border-gray-300 rounded-lg p-3" required>
+            </div>
+            <div class="flex-1">
+            <label for="check_out_date" class="block text-gray-600 mb-1">Check-out Date</label>
+            <input type="date" id="check_out_date" name="check_out_date"
+                    value="<?php echo htmlspecialchars($CheckOutDate); ?>"
+                    class="w-full border border-gray-300 rounded-lg p-3" required>
+            </div>
+        </div>
+        </div>
 
       <button type="submit" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold w-full">
         Complete Payment
@@ -108,33 +143,65 @@ if ($result->num_rows > 0) {
   </div>
 
   <!-- Second Card: Booking Summary -->
-  <div class="w-1/3 bg-white rounded-2xl shadow-lg p-6 flex flex-col justify-between">
-    <div>
-     <!-- Display the hotel image -->
-     <img src="<?php echo htmlspecialchars($hotelImageURL); ?>" alt="Hotel Image"
-           class="rounded-xl mb-4 h-48 w-full object-cover border" />
+<div class="w-1/3 bg-white rounded-2xl shadow-lg p-6 flex flex-col justify-between">
+  <div>
+    <!-- Display the hotel image -->
+    <img src="<?php echo htmlspecialchars($hotelImageURL); ?>" alt="Hotel Image"
+         class="rounded-xl mb-6 h-56 w-full object-cover border" />
 
+    <h3 class="text-xl font-semibold text-gray-800 mt-8 flex items-center gap-2">
+      <i data-feather="home"></i> <?php echo htmlspecialchars($row['hotel_name'] ?? 'Hotel Name'); ?>
+    </h3>
+    <p class="text-gray-600 mt-1"><?php echo htmlspecialchars($row['location'] ?? 'Location'); ?></p>
 
-      <h3 class="text-xl font-semibold text-gray-800 flex items-center gap-2">
-        <i data-feather="home"></i> <?php echo htmlspecialchars($row['hotel_name'] ?? 'Hotel Name'); ?>
-      </h3>
-      <p class="text-gray-600 mt-1"><?php echo htmlspecialchars($row['location'] ?? 'Location'); ?></p>
+    <div class="mt-6 border-t pt-4 space-y-2 text-gray-700">
+    <p>
+        <i data-feather="dollar-sign" class="inline w-4 h-4 mr-1"></i>
+        <span class="font-medium">Price per Night:</span> AED <?php echo htmlspecialchars($row['price'] ?? '0'); ?>
+    </p>
+    <p>
+        <i data-feather="clock" class="inline w-4 h-4 mr-1"></i>
+        <span class="font-medium">Nights:</span> <?php echo $nights; ?>
+    </p>
+    <p class="text-gray-900 font-semibold">
+        <i data-feather="credit-card" class="inline w-4 h-4 mr-1"></i>
+        Total: USD <?php echo number_format((float)($total * 0.27), 2); ?>
+    </p>
+    <p>
+        <i data-feather="layers" class="inline w-4 h-4 mr-1"></i>
+        <span class="font-medium">Rooms:</span> <?php echo htmlspecialchars($qtyRooms); ?>
+    </p>
+    <p>
+        <i data-feather="home" class="inline w-4 h-4 mr-1"></i>
+        <span class="font-medium">Room Type:</span> <?php echo htmlspecialchars($room); ?>
+    </p>
+</div>
 
-      <div class="mt-4 border-t pt-4 space-y-2">
-        <p class="text-gray-700"><i data-feather="dollar-sign" class="inline w-4"></i> <span class="font-medium">Price per Night:</span> AED <?php echo htmlspecialchars($row['price'] ?? '0'); ?></p>
-        <p class="text-gray-700"><i data-feather="clock" class="inline w-4"></i> <span class="font-medium">Nights:</span> <?php echo $nights; ?></p>
-        <p class="text-gray-900 font-semibold"><i data-feather="credit-card" class="inline w-4"></i> Total: AED <?php echo htmlspecialchars($total); ?></p>
-      </div>
-    </div>
+<!-- Feather icons script (make sure this is included on your page) -->
+<script>
+    feather.replace();
+</script>
 
-    <div class="mt-6 border-t pt-4">
-      <h4 class="text-lg font-semibold text-gray-800 mb-2 flex items-center gap-2">
-        <i data-feather="help-circle"></i> Need Help?
-      </h4>
-      <p class="text-gray-600 text-sm mb-1"><i data-feather="phone" class="inline w-4"></i> Call: <span class="font-medium text-blue-600">+971 123 456 789</span></p>
-      <p class="text-gray-600 text-sm"><i data-feather="mail" class="inline w-4"></i> Email: <span class="font-medium text-blue-600">support@hotelbooking.com</span></p>
-    </div>
   </div>
+
+
+  <div class=" border-t pt-6">
+    <h4 class="text-lg font-semibold text-gray-800 mb-2 flex items-center gap-2">
+      <i data-feather="help-circle"></i> Need Help?
+    </h4>
+    <p class="text-gray-600 text-sm mb-1"><i data-feather="phone" class="inline w-4"></i> Call: <span class="font-medium text-blue-600">+971 123 456 789</span></p>
+    <p class="text-gray-600 text-sm"><i data-feather="mail" class="inline w-4"></i> Email: <span class="font-medium text-blue-600">support@hotelbooking.com</span></p>
+  </div>
+</div>
+
+<!-- JavaScript to Auto-Fill Check-in Date -->
+<script>
+  // Get today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split('T')[0];
+
+  // Set the check-in date to today's date
+  document.getElementById('check_in_date').value = today;
+</script>
 
 </div>
 

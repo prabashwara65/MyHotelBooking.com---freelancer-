@@ -16,6 +16,7 @@ if ($result->num_rows === 0) {
 }
 
 $row = $result->fetch_assoc();
+
 ?>
 
 <!DOCTYPE html>
@@ -107,7 +108,6 @@ $row = $result->fetch_assoc();
             </div>
         </div>
 
-        <a href="hotel_list.php" class="mt-6 inline-block bg-gray-500 text-white px-4 py-2 rounded-lg text-center hover:bg-gray-600 transition duration-300">← Back to List</a>
     </div>
 </div>
 

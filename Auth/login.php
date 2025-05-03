@@ -5,6 +5,10 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 session_start();
 
+if (isset($_GET['error']) && $_GET['error'] === 'loginfirst') {
+    echo '<div class="text-red-600 mb-2">Please login first to access that page.</div>';
+}
+
 // Connect to the database
 include '../db.php'; 
 
@@ -31,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // If there are no errors, attempt to log the user in
     if (empty($email_err) && empty($password_err)) {
         // Prepare a SQL query to check the user's credentials
-        $sql = "SELECT id, name, email, password FROM users WHERE email = ?";
+        $sql = "SELECT id, name, email, role , password FROM users WHERE email = ?";
 
         if ($stmt = $conn->prepare($sql)) {
             // Bind the email parameter to the SQL query
@@ -47,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Check if the email exists in the database
                 if ($stmt->num_rows == 1) {
                     // Bind the result to variables
-                    $stmt->bind_result($id, $name, $email, $stored_password);
+                    $stmt->bind_result($id, $name, $email, $role,  $stored_password);
 
                     if ($stmt->fetch()) {
                         // Check if the password is correct (without hashing)
@@ -60,9 +64,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $_SESSION["id"] = $id;
                             $_SESSION["email"] = $email;
                             $_SESSION["name"] = $name;
+                            $_SESSION["role"] = $role;
 
-                            // Redirect the user to their bookings page
-                            header("location: /myhotelbooking.com/home/home.php");
+                            if ($role === 'user') {
+                                header("Location: /myhotelbooking.com/home/home.php");
+                                exit;
+                            } elseif ($role === 'admin') {
+                                header("Location: /myhotelbooking.com/dashboard/dashboard.php");
+                                exit;
+                            } else {
+                                // Optional: handle other roles or unknown roles
+                                echo "Access denied. Unknown role.";
+                                exit;
+                            }
                         } else {
                             $password_err = "The password you entered is incorrect.";
                         }
@@ -89,42 +103,64 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyHotelBooking - Login</title>
-    <!-- Add your styles here -->
-</head>
-<body>
-    <!-- Your header and other content here -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
-    <div class="container">
-        <div class="auth-container">
-            <div class="auth-form">
-                <h2>Login to Your Account</h2>
+    <title>MyHotelBooking - Login</title>
+</head>
+<body class="bg-gray-100">
+
+    <div class="flex min-h-screen">
+
+       <!-- Blue Card on the Left -->
+        <div class="flex-1 bg-blue-500 text-white p-10 flex">
+            <div>
+                <h2 class="text-4xl font-bold mb-4">Welcome Back!</h2>
+                <p>Login to manage your bookings, save favorites, and access exclusive member deals.</p>
+                <p>Your perfect stay awaits!</p>
+
+                <h2 class="mt-80 ml-5">New to MyHotelBooking?</h2>
+                <a href="register.php">
+                    <button class="font-bold text-white bg-transparent border-2 border-white rounded-full p-6 mt-4 hover:bg-white hover:text-black hover:border-transparent transition">Create New Account</button>
+                </a>
+            </div>
+        </div>
+
+        <!-- Login Card on the Right -->
+        <div class="flex-1 bg-white p-8 shadow-lg rounded-lg flex justify-center items-center">
+            <div class="max-w-md w-full">
+                <h2 class="text-2xl font-semibold text-center mb-6">Login to Your Account</h2>
                 <form action="login.php" method="POST">
-                    <div class="form-group">
-                        <label for="loginEmail">Email Address</label>
-                        <input type="email" id="loginEmail" name="email" required value="<?php echo $email; ?>">
-                        <span class="error"><?php echo $email_err; ?></span>
+                    <div class="mb-4">
+                        <label for="loginEmail" class="block text-sm font-medium text-gray-700">Email Address</label>
+                        <input type="email" id="loginEmail" name="email" required value="<?php echo $email; ?>"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <?php if (!empty($email_err)) { echo '<span class="text-red-500 text-sm">' . $email_err . '</span>'; } ?>
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="loginPassword">Password</label>
-                        <input type="password" id="loginPassword" name="password" required>
-                        <span class="error"><?php echo $password_err; ?></span>
-                        <div class="password-requirements">
-                            <a href="forgot-password.html">Forgot Password?</a>
+
+                    <div class="mb-6">
+                        <label for="loginPassword" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" id="loginPassword" name="password" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <?php if (!empty($password_err)) { echo '<span class="text-red-500 text-sm">' . $password_err . '</span>'; } ?>
+                        <div class="text-right mt-2">
+                            <a href="forgot-password.html" class="text-blue-500 text-sm">Forgot Password?</a>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                    <button type="submit"
+                        class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        Login
+                    </button>
                 </form>
 
-                <div class="form-toggle">
-                    Don't have an account? <a href="register.php">Register here</a>
+                <div class="text-center mt-4">
+                    Don't have an account? <a href="register.php" class="text-blue-500">Register here</a>
                 </div>
             </div>
         </div>
+
     </div>
 
-    <!-- Your footer here -->
 </body>
+
 </html>

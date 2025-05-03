@@ -1,10 +1,18 @@
 <?php
 include '../db.php';
 
+session_start();
+
 if (!isset($_GET['hotel_id']) || !isset($_GET['room'])) {
     echo "Hotel or Room type not selected.";
     exit;
 }
+
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("Location: /myhotelbooking.com/Auth/login.php?error=loginfirst");
+    exit;
+}
+
 
 $hotelId = intval($_GET['hotel_id']);
 $roomType = trim($_GET['room']);
@@ -35,6 +43,8 @@ if (!array_key_exists($roomType, $roomDetails)) {
 }
 
 $roomData = $roomDetails[$roomType];
+
+
 ?>
 
 <!DOCTYPE html>

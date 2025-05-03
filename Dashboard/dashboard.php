@@ -12,6 +12,18 @@ if ($result->num_rows > 0) {
     }
 }
 
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    // Not logged in
+    header("Location: /myhotelbooking.com/login/login.php");
+    exit;
+}
+
+// Only allow 'admin' role
+if ($_SESSION["role"] !== 'admin') {
+    echo "Access Denied. You do not have permission to access this page.";
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>

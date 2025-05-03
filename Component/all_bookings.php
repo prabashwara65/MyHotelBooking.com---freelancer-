@@ -53,9 +53,9 @@ if ($result->num_rows > 0) {
                         <td class="px-6 py-4 whitespace-nowrap"><?= $booking['booking_id'] ?></td>
                         <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($booking['customer_name']) ?></td>
                         <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($booking['hotel_id']) ?></td>
-                        <td class="px-6 py-4 whitespace-nowrap"><?= date("F j, Y", strtotime($booking['check_in'])) ?></td>
-                        <td class="px-6 py-4 whitespace-nowrap"><?= date("F j, Y", strtotime($booking['check_out'])) ?></td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= date("F j, Y", strtotime($booking['created_at'])) ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap"><?= date("F j, Y", strtotime($booking['check_in_date'])) ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap"><?= date("F j, Y", strtotime($booking['check_out_date'])) ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= date("F j, Y", strtotime($booking['booking_date'])) ?></td>
                     </tr>
                     <?php endforeach; ?>
                 <?php else: ?>

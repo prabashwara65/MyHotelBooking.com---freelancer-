@@ -29,7 +29,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 <a href="/myhotelbooking.com/home/home.php" class="hover:text-indigo-600">Home</a>
                 <a href="/myhotelbooking.com/hotels/hotels.php" class="hover:text-indigo-600">Hotels</a>
                 <a href="#" class="hover:text-indigo-600">Destinations</a>
-                <a href="#" class="hover:text-indigo-600">Deals</a>
+                <a href="/myhotelbooking.com/booking/bookings.php" class="hover:text-indigo-600">My Bookings</a>
                 <a href="#" class="hover:text-indigo-600">About</a>
             </nav>
 

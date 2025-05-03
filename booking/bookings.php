@@ -1,6 +1,10 @@
 <?php
 session_start();
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 if (isset($_SESSION['success_message'])) {
     echo "<div class='text-green-600 font-semibold text-center py-2'>" . $_SESSION['success_message'] . "</div>";
     unset($_SESSION['success_message']);
@@ -9,8 +13,16 @@ if (isset($_SESSION['success_message'])) {
 include '../db.php';
 include('../Component/header.php');
 
-// Fetch the booking details
-$sql = "SELECT * FROM bookings ORDER BY booking_date DESC";
+// Ensure the user is logged in
+if (!isset($_SESSION['email'])) {
+    echo "<div class='text-red-600 font-semibold text-center py-2'>Please login.</div>";
+    exit; // Stop further processing if the user is not logged in
+}
+
+$user_email = $_SESSION['email']; // Get the logged-in user's email
+
+// Fetch the booking details for the logged-in user
+$sql = "SELECT * FROM bookings WHERE customer_email = '$user_email' ORDER BY booking_date DESC";
 $result = $conn->query($sql);
 $defaultImage = 'https://via.placeholder.com/150?text=No+Image';
 
@@ -25,7 +37,7 @@ $defaultImage = 'https://via.placeholder.com/150?text=No+Image';
 </head>
 <body class="bg-gray-100 p-4">
     <div class="max-w-7xl mx-auto px-4 py-8">
-        <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Hotel Booking Cards</h2>
+        <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Your Hotel Bookings</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
             <?php if ($result->num_rows > 0): ?>
@@ -72,13 +84,13 @@ $defaultImage = 'https://via.placeholder.com/150?text=No+Image';
                             <a href="view_booking.php?booking_id=<?= $row['booking_id'] ?>" class="text-white bg-blue-500 hover:bg-blue-600 rounded-full px-4 py-2 text-sm">View</a>
                             <form method="POST" action="/myhotelbooking.com/booking/delete_booking.php" onsubmit="return confirm('Are you sure you want to delete this booking?');">
                                 <input type="hidden" name="booking_id" value="<?= $row['booking_id'] ?>">
-                                <button type="submit" class="text-white bg-red-500 hover:bg-red-600 rounded-full px-4 py-2 text-sm">Delete</button>
+                                <button type="submit" class="text-white bg-red-500 hover:bg-red-600 rounded-full px-4 py-2 text-sm">Cancel Booking</button>
                             </form>
                         </div>
                     </div>
                 <?php endwhile; ?>
             <?php else: ?>
-                <div class="col-span-3 text-center text-gray-500 text-lg">No bookings found.</div>
+                <div class="col-span-3 text-center text-gray-500 text-lg">You don't have any bookings.</div>
             <?php endif; ?>
 
         </div>

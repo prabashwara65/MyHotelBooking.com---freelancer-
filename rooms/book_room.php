@@ -80,7 +80,7 @@ include('../Component/header.php');
             document.getElementById('usdPrice').textContent = usd.toFixed(2);
 
             document.getElementById('bookingLink').href =
-                `/myhotelbooking.com/checkout/checkout.php?hotel_id=${hotelId}&room=${encodeURIComponent(roomType)}&total=${totalPrice.toFixed(2)}&nights=${nights}&qtyRooms=${qty}`;
+                `/myhotelbooking.com/checkout/checkout.php?hotel_id=${hotelId}&roomType=${roomType}&total=${totalPrice.toFixed(2)}&nights=${nights}&qtyRooms=${qty}`;
         }
 
         qtyInput.addEventListener('input', updatePrice);

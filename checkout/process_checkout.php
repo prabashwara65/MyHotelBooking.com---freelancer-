@@ -13,7 +13,7 @@ $customerEmail = $_SESSION['email'] ?? null;
 
 // Retrieve and sanitize other form data
 $hotelId = filter_var($_POST['hotel_id'], FILTER_SANITIZE_NUMBER_INT);
-$room = filter_var($_POST['room'], FILTER_SANITIZE_NUMBER_INT); // Assuming you pass the room as a hidden field
+$roomType = filter_var($_POST['roomType'], FILTER_SANITIZE_NUMBER_INT); 
 $total = filter_var($_POST['total'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 $nights = filter_var($_POST['nights'], FILTER_SANITIZE_NUMBER_INT);
 $cardNumber = filter_var($_POST['card_number'], FILTER_SANITIZE_STRING);
@@ -28,20 +28,26 @@ $checkInDate = date('Y-m-d', strtotime($_POST['check_in_date']));
 $checkOutDate = date('Y-m-d', strtotime($_POST['check_out_date']));
 
 // Validate date formats (check if valid date)
-if (!DateTime::createFromFormat('Y-m-d', $checkInDate)) {
+if (!DateTime::createFromFormat('Y-m-d', $checkInDate) || $checkInDate === false) {
     echo "<p>Error: Invalid check-in date format. Please use YYYY-MM-DD.</p>";
     exit();
 }
 
-if (!DateTime::createFromFormat('Y-m-d', $checkOutDate)) {
+if (!DateTime::createFromFormat('Y-m-d', $checkOutDate) || $checkOutDate === false) {
     echo "<p>Error: Invalid check-out date format. Please use YYYY-MM-DD.</p>";
     exit();
 }
+
+// Debugging: Check if dates are being correctly formatted
+echo "<p><strong>Check-in Date:</strong> $checkInDate</p>";
+echo "<p><strong>Check-out Date:</strong> $checkOutDate</p>";
+
 
 // Show received values (for debugging or confirmation)
 echo "<h3>Received Booking Information</h3>";
 echo "<p><strong>Hotel ID:</strong> $hotelId</p>";
 echo "<p><strong>Name:</strong> $customerName</p>";
+echo "<p><strong>Room Type:</strong> $roomType</p>";
 echo "<p><strong>Email:</strong> $customerEmail</p>";
 echo "<p><strong>Room:</strong> $qtyRooms</p>";
 echo "<p><strong>Total:</strong> $total</p>";
@@ -57,17 +63,15 @@ echo "<p><strong>Check-out Date:</strong> $checkOutDate</p>";
 // Prepare the SQL query
 $stmt = $conn->prepare("INSERT INTO bookings (
     hotel_id, customer_name, customer_email, card_number, exp_date, cvv, cardholder_name, billing_address,
-    check_in_date, check_out_date, num_nights, room, total, booking_date
-) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP())");
+    check_in_date, check_out_date, nights, roomType, qtyRooms, total, booking_date
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP())");
 
 // Check if the statement preparation was successful
 if ($stmt === false) {
     die('SQL prepare error: ' . $conn->error);
 }
 
-// Bind parameters
-$stmt->bind_param(
-    "issssssssssss",
+$stmt->bind_param("isssssssssiiid",
     $hotelId,
     $customerName,
     $customerEmail,
@@ -76,11 +80,12 @@ $stmt->bind_param(
     $cvv,
     $cardholderName,
     $billingAddress,
-    $checkInDate,
-    $checkOutDate,
-    $nights,
-    $room,
-    $total
+    $checkInDate,    // string (date)
+    $checkOutDate,   // string (date)
+    $nights,         // int
+    $roomType,       // int
+    $qtyRooms,       // int
+    $total           // double
 );
 
 // Execute the query and check for success

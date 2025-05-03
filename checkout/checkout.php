@@ -25,7 +25,7 @@ error_reporting(E_ALL);
 
 // Get data from query parameters
 $hotelId = $_GET['hotel_id'] ?? null;
-$room = $_GET['room'] ?? null;
+$roomType = $_GET['roomType'] ?? null;
 $total = $_GET['total'] ?? null;
 $nights = $_GET['nights'] ?? null; 
 $qtyRooms = $_GET['qtyRooms'] ?? null;
@@ -35,7 +35,7 @@ $qtyRooms = $_GET['qtyRooms'] ?? null;
 
 
 
-if (!$hotelId || !$room || !$total) {
+if (!$hotelId || !$roomType || !$total) {
     die("Missing booking data.");
 }
 
@@ -73,7 +73,7 @@ if ($result->num_rows > 0) {
       <input type="hidden" name="hotel_id" value="<?php echo $hotelId; ?>">
       <input type="hidden" name="nights" value="<?php echo $nights; ?>">
       <input type="hidden" name="total" value="<?php echo $total * 0.27; ?>">
-      <input type="hidden" name="room" value="<?php echo $room; ?>">
+      <input type="hidden" name="roomType" value="<?php echo $roomType; ?>">
       <input type="hidden" name="qtyRooms" value="<?php echo $qtyRooms; ?>">
       <input type="hidden" name="check_in_date" value="<?php echo $CheckInDate; ?>">
       <input type="hidden" name="check_out_date" value="<?php echo $CheckOutDate; ?>">
@@ -173,7 +173,7 @@ if ($result->num_rows > 0) {
     </p>
     <p>
         <i data-feather="home" class="inline w-4 h-4 mr-1"></i>
-        <span class="font-medium">Room Type:</span> <?php echo htmlspecialchars($room); ?>
+        <span class="font-medium">Room Type:</span> <?php echo htmlspecialchars($roomType); ?>
     </p>
 </div>
 

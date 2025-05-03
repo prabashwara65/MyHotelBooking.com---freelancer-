@@ -9,9 +9,11 @@ if (isset($_SESSION['success_message'])) {
 include '../db.php';
 include('../Component/header.php');
 
+// Fetch the booking details
 $sql = "SELECT * FROM bookings ORDER BY booking_date DESC";
 $result = $conn->query($sql);
 $defaultImage = 'https://via.placeholder.com/150?text=No+Image';
+
 ?>
 
 <!DOCTYPE html>
@@ -21,13 +23,25 @@ $defaultImage = 'https://via.placeholder.com/150?text=No+Image';
     <title>Hotel Booking Cards</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 p-4">
     <div class="max-w-7xl mx-auto px-4 py-8">
         <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Hotel Booking Cards</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
             <?php if ($result->num_rows > 0): ?>
                 <?php while ($row = $result->fetch_assoc()): ?>
+                    <?php
+                        // Fetch hotel image URL based on hotel_id
+                        $hotel_id = $row['hotel_id'];
+                        $hotel_sql = "SELECT image_url FROM hotels WHERE id = $hotel_id";
+                        $hotel_result = $conn->query($hotel_sql);
+                        $hotel_image = $defaultImage; // Default image
+                        if ($hotel_result->num_rows > 0) {
+                            $hotel_row = $hotel_result->fetch_assoc();
+                            $hotel_image = $hotel_row['image_url'] ?: $defaultImage; // Use hotel image if available
+                        }
+                    ?>
+
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col">
                         <div class="flex flex-col sm:flex-row">
                             <div class="flex-1 p-4 space-y-2">
@@ -49,13 +63,13 @@ $defaultImage = 'https://via.placeholder.com/150?text=No+Image';
                                 <p class="text-sm text-gray-600"><strong>Billing Address:</strong> <?= htmlspecialchars($row['billing_address']) ?></p>
                                 <p class="text-xs text-gray-500">Booked on <?= $row['booking_date'] ?></p>
                             </div>
-                            <div class="sm:w-40 sm:h-auto flex items-center justify-center p-4">
-                                <img src="<?= htmlspecialchars($row['hotel_image']) ?: $defaultImage ?>" alt="Hotel" class="rounded-md object-cover w-full h-40">
+                            <div class="sm:w-40 sm:h-auto flex  justify-center p-4">
+                                <img src="<?= htmlspecialchars($hotel_image) ?>" alt="Hotel Image" class="rounded-md object-cover w-full h-40">
                             </div>
                         </div>
                         <div class="flex justify-between p-4">
                             <a href="view_booking.php?booking_id=<?= $row['booking_id'] ?>" class="text-white bg-blue-500 hover:bg-blue-600 rounded-full px-4 py-2 text-sm">View</a>
-                            <form method="POST" action=" /myhotelbooking.com/booking/delete_booking.php" onsubmit="return confirm('Are you sure you want to delete this booking?');">
+                            <form method="POST" action="/myhotelbooking.com/booking/delete_booking.php" onsubmit="return confirm('Are you sure you want to delete this booking?');">
                                 <input type="hidden" name="booking_id" value="<?= $row['booking_id'] ?>">
                                 <button type="submit" class="text-white bg-red-500 hover:bg-red-600 rounded-full px-4 py-2 text-sm">Delete</button>
                             </form>

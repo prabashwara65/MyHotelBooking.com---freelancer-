@@ -70,12 +70,14 @@ $defaultImage = 'https://via.placeholder.com/150?text=No+Image';
                                     <strong>Check-in:</strong> <?= $row['check_in_date'] ?><br>
                                     <strong>Check-out:</strong> <?= $row['check_out_date'] ?>
                                 </p>
+
                                 <p class="text-sm text-gray-600"><strong>Total:</strong> $<?= number_format($row['total'], 2) ?></p>
                                 <hr class="my-2">
                                 <p class="text-sm text-gray-600"><strong>Cardholder:</strong> <?= htmlspecialchars($row['cardholder_name']) ?></p>
                                 <p class="text-sm text-gray-600"><strong>Billing Address:</strong> <?= htmlspecialchars($row['billing_address']) ?></p>
                                 <p class="text-xs text-gray-500">Booked on <?= $row['booking_date'] ?></p>
                             </div>
+                            
                             <div class="sm:w-40 sm:h-auto flex  justify-center p-4">
                                 <img src="<?= htmlspecialchars($hotel_image) ?>" alt="Hotel Image" class="rounded-md object-cover w-full h-40">
                             </div>

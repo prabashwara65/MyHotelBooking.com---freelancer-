@@ -51,11 +51,11 @@ $row = $result->fetch_assoc();
 
 <div class="container mx-auto mt-6 px-4 ">
     <div class="flex justify-between gap-5">
-        <div class="hotel-banner mb-6 w-2/3 ">
-            <img src="<?php echo $row['image_url']; ?>" alt="<?php echo htmlspecialchars($row['hotel_name']); ?>" class="rounded-lg shadow-lg">
+        <div class="hotel-banner mb-4 w-2/3 ">
+            <img src="<?php echo $row['image_url']; ?>" alt="<?php echo htmlspecialchars($row['hotel_name']); ?>" class="rounded-lg shadow-lg ">
         </div>
 
-        <div class="w-1/3 bg-white p-8 rounded-2xl h-[400px]">
+        <div class="w-1/3 bg-white p-6 rounded-2xl h-[400px] ">
         <h2 class="text-3xl font-semibold text-gray-900"><?php echo htmlspecialchars($row['hotel_name']); ?></h2>
             <p class="text-lg text-gray-600 mt-2"><i class="fas fa-map-marker-alt text-red-500 mr-2"></i><?php echo htmlspecialchars($row['location']); ?></p>
 
@@ -67,9 +67,9 @@ $row = $result->fetch_assoc();
                     <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Eco Certified</span>
                 <?php endif; ?>
             </div>
-            <p class="mt-4 text-xl font-medium">Rating: <?php echo $row['rating']; ?> ★</p>
-            <p class="text-xl font-medium mt-2">Price: AED <?php echo $row['price']; ?> / night</p>
-            <p class="text-xl font-extralight mt-4 text-gray-600"> <?php echo $row['description']; ?> / night</p>
+            <p class="mt-4 text-lg font-medium">Rating: <?php echo $row['rating']; ?> ★</p>
+            <p class="text-lg font-medium mt-1">Price: AED <?php echo $row['price']; ?> / night</p>
+            <p class="text-sm font-extralight mt-3 text-gray-600"> <?php echo $row['description']; ?> </p>
         </div>
     </div>
 
@@ -84,29 +84,23 @@ $row = $result->fetch_assoc();
 
         // Map keywords to Font Awesome icons
         $iconMap = [
-            'wifi' => 'fa-wifi',
-            'parking' => 'fa-parking',
-            'pool' => 'fa-swimming-pool',
-            'gym' => 'fa-dumbbell',
-            'restaurant' => 'fa-utensils',
-            'spa' => 'fa-spa',
-            'bar' => 'fa-cocktail',
-            'ac' => 'fa-fan',
-            'tv' => 'fa-tv',
-            'laundry' => 'fa-soap',
-            'breakfast' => 'fa-mug-hot',
-            'room service' => 'fa-concierge-bell',
-            'pet' => 'fa-dog',
-            'security' => 'fa-shield-alt'
+            'free high-speed wifi' => 'fa-wifi',
+            'rooftop infinity pool' => 'fa-swimming-pool',
+            '4 restaurants & bars' => 'fa-utensils',
+            'eforea spa' => 'fa-spa',
+            '24/7 fitness center' => 'fa-dumbbell',
+            'concierge service' => 'fa-concierge-bell',
+            'business center' => 'fa-business-time',
+            'kids club' => 'fa-child'
         ];
 
         foreach ($features as $feature): 
             $trimmed = strtolower(trim($feature));
             $icon = $iconMap[$trimmed] ?? 'fa-check-circle'; // Default icon
         ?>
-            <div class="bg-white p-4 rounded-lg shadow-md text-center">
-                <i class="fas <?= $icon ?> text-indigo-500 text-2xl mb-2"></i>
-                <p class="text-gray-700 capitalize"><?= htmlspecialchars($trimmed) ?></p>
+            <div class="flex gap-4 items-center bg-white p-4 rounded-lg shadow-md ">
+                <i class="fas <?= $icon ?> text-black text-2xl mb-2"></i>
+                <p class="text-black capitalize"><?= htmlspecialchars($trimmed) ?></p>
             </div>
         <?php endforeach; ?>
     </div>

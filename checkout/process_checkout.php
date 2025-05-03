@@ -24,6 +24,27 @@ $cardholderName = filter_var($_POST['cardholder_name'], FILTER_SANITIZE_STRING);
 $billingAddress = filter_var($_POST['billing_address'], FILTER_SANITIZE_STRING);
 $qtyRooms = filter_var($_POST['qtyRooms'], FILTER_SANITIZE_STRING);
 
+// Check if 'selected_features' are sent and sanitize the data
+if (isset($_POST['selected_features'])) {
+    $selectedFeatures = $_POST['selected_features'];  // An array of features
+} else {
+    $selectedFeatures = []; // If no features are selected, set to an empty array
+}
+
+// Convert the features array to a JSON string
+$featuresJson = json_encode($selectedFeatures);
+
+// Check if the JSON conversion was successful
+if ($featuresJson === false) {
+    echo "<p>Error encoding features into JSON format: " . json_last_error_msg() . "</p>";
+    ob_end_flush();
+    exit();
+}
+
+// If no features selected, we can assign null or an empty string based on your database design
+if (empty($selectedFeatures)) {
+    $featuresJson = null;  // or you can use `""` (empty string), depending on your database schema
+}
 // Format and validate the check-in and check-out dates
 $checkInDate = date('Y-m-d', strtotime($_POST['check_in_date']));
 $checkOutDate = date('Y-m-d', strtotime($_POST['check_out_date']));
@@ -58,12 +79,13 @@ echo "<p><strong>Expiration Date:</strong> $expDate</p>";
 echo "<p><strong>CVV:</strong> [Hidden]</p>";
 echo "<p><strong>Cardholder Name:</strong> $cardholderName</p>";
 echo "<p><strong>Billing Address:</strong> $billingAddress</p>";
+echo "<p><strong>Features:</strong> $featuresJson</p>";
 
 // Prepare the SQL query
 $stmt = $conn->prepare("INSERT INTO bookings (
     hotel_id, customer_name, customer_email, card_number, exp_date, cvv, cardholder_name, billing_address,
-    check_in_date, check_out_date, nights, roomType, qtyRooms, total, booking_date
-) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP())");
+    check_in_date, check_out_date, nights, roomType, qtyRooms, total, features, booking_date
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP())");
 
 if ($stmt === false) {
     echo "<p style='color: red;'>SQL prepare error: " . $conn->error . "</p>";
@@ -71,7 +93,7 @@ if ($stmt === false) {
     exit();
 }
 
-$stmt->bind_param("isssssssssiiid",
+$stmt->bind_param("isssssssssiiids",
     $hotelId,
     $customerName,
     $customerEmail,
@@ -85,19 +107,17 @@ $stmt->bind_param("isssssssssiiid",
     $nights,
     $roomType,
     $qtyRooms,
-    $total
+    $total,
+    $featuresJson
 );
 
 if ($stmt->execute()) {
     $bookingId = $stmt->insert_id; // ✅ Get the last inserted ID
     $_SESSION['success_message'] = "Booking added successfully! (Booking ID: $bookingId)";
-
     $stmt->close();
     $conn->close();
-
     header("Location: /myhotelbooking.com/booking/bookings.php");
     exit();
-
 } else {
     echo "<p style='color: red;'>Error: " . $stmt->error . "</p>";
     $stmt->close();

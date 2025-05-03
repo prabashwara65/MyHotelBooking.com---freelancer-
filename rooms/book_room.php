@@ -32,7 +32,7 @@ $roomDetails = [];
 foreach ($roomTypes as $room) {
     $roomDetails[trim($room)] = [
         'description' => 'A cozy and modern room with top-notch amenities for your comfort.',
-        'features' => ['Free Wi-Fi', 'Air Conditioning', '24/7 Room Service', 'Flat-Screen TV', 'Mini Bar'],
+        'features' => ['Free High-Speed WiFi', 'rooftop infinity pool', '4 restaurants & bars', 'eforea spa', '24/7 fitness center','concierge service','business center','kids club'],
         'price' => rand(150, 300) // AED
     ];
 }
@@ -215,6 +215,8 @@ include('../Component/header.php');
                     <li><i class="fas fa-headset text-indigo-600 mr-2"></i>24/7 Customer Support</li>
                     <li><i class="fas fa-users text-pink-500 mr-2"></i>Trusted by Thousands</li>
                     <li><i class="fas fa-clock text-orange-500 mr-2"></i>Early Check-in & Late Check-out</li>
+                    <li><i class="fas fa-trophy text-yellow-500 mr-2"></i>Award-Winning Service</li>
+                   
                 </ul>
             </div>
         </div>

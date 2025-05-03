@@ -17,6 +17,8 @@
 include('../Component/header.php');
 include '../db.php';
 
+
+
 session_start();
 
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
@@ -40,6 +42,32 @@ $qtyRooms = $_GET['qtyRooms'] ?? null;
 // $CheckOutDate = $_GET['check_out_date'] ?? null;
 
 
+$sql = "SELECT * FROM hotels WHERE id = $hotelId";
+$result = $conn->query($sql);
+
+if ($result->num_rows === 0) {
+    echo "Hotel not found.";
+    exit;
+}
+
+$row = $result->fetch_assoc();
+
+$roomTypes = explode(',', $row['room_types']);
+$roomDetails = [];
+foreach ($roomTypes as $room) {
+    $roomDetails[trim($room)] = [
+        'description' => 'A cozy and modern room with top-notch amenities for your comfort.',
+        'features' => ['Free High-Speed WiFi', 'rooftop infinity pool', '4 restaurants & bars', 'eforea spa', '24/7 fitness center','concierge service','business center','kids club'],
+        'price' => rand(150, 300) // AED
+    ];
+}
+
+if (!array_key_exists($roomType, $roomDetails)) {
+    echo "Room type not found.";
+    exit;
+}
+
+$roomData = $roomDetails[$roomType];
 
 
 if (!$hotelId || !$roomType || !$total) {
@@ -84,9 +112,9 @@ if ($result->num_rows > 0) {
       <input type="hidden" name="qtyRooms" value="<?php echo $qtyRooms; ?>">
       <input type="hidden" name="check_in_date" value="<?php echo $CheckInDate; ?>">
       <input type="hidden" name="check_out_date" value="<?php echo $CheckOutDate; ?>">
-
+      <input type="hidden" name="features" value='<?php echo json_encode($roomData["features"]); ?>'>
       
-
+      
       <div>
         <label class="block text-gray-600 mb-1 flex items-center gap-2">
           <i data-feather="credit-card"></i> Card Number
@@ -142,6 +170,23 @@ if ($result->num_rows > 0) {
             </div>
         </div>
         </div>
+
+        <div  class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-gray-800">
+              <?php foreach ($roomData['features'] as $index => $feature): 
+                  $featureId = 'feature_' . $index;
+              ?>
+                  <div class="flex items-center space-x-2">
+                  <input 
+                      type="checkbox" 
+                      id="<?= $featureId ?>" 
+                      name="selected_features[]" 
+                      value="<?= htmlspecialchars($feature) ?>" 
+                      class="form-checkbox text-indigo-600 w-5 h-5"
+                  />
+                      <label for="<?= $featureId ?>" class="text-gray-700"><?= htmlspecialchars($feature) ?></label>
+                  </div>
+              <?php endforeach; ?>
+         </div>
 
       <button type="submit" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold w-full">
         Complete Payment

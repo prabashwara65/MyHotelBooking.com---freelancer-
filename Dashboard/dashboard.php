@@ -3,6 +3,10 @@
 session_start();
 include '../db.php';
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 $hotels = [];
 $sql = "SELECT * FROM hotels ORDER BY hotel_name ASC";
 $result = $conn->query($sql);
@@ -45,7 +49,7 @@ if ($_SESSION["role"] !== 'admin') {
     <ul class="space-y-4">
         <li><a href="#" class="hover:text-yellow-400 text-lg">Dashboard</a></li>
         <li><a href="#" class="hover:text-yellow-400 text-lg">Analytics</a></li>
-        <li><a href="#" class="hover:text-yellow-400 text-lg">Settings</a></li>
+        <li><a href="#" onclick="loadContent('all_bookings.php')" class="hover:text-yellow-400 text-lg">All Bookings</a></li>
         <li><a href="#" class="hover:text-yellow-400 text-lg">Users</a></li>
     </ul>
 </aside>
@@ -77,8 +81,28 @@ if ($_SESSION["role"] !== 'admin') {
         </div>
     </div>
 
+    <script>
+    function loadContent(file) {
+        const container = document.getElementById('main-content');
+        container.innerHTML = '<div class="text-center p-10 text-gray-500">Loading...</div>';
+
+        fetch('/myhotelbooking.com/Component/all_bookings.php/' + file)
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.text();
+            })
+            .then(html => {
+                container.innerHTML = html;
+            })
+            .catch(error => {
+                container.innerHTML = '<div class="text-red-500 p-6">Error loading content: ' + error.message + '</div>';
+            });
+}
+    </script>
+
+
    <!-- Hotel Cards Container with Scroll -->
-<div class="max-h-[600px] overflow-y-auto pr-2">
+<div id="main-content" class="max-h-[600px] overflow-y-auto pr-2">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
         <?php foreach ($hotels as $hotel): ?>
         <div class="bg-white rounded-lg shadow overflow-hidden">

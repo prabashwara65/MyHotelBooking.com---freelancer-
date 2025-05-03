@@ -50,8 +50,9 @@ $defaultImage = 'https://via.placeholder.com/150?text=No+Image';
                                 <p class="text-sm text-gray-600"><strong>Hotel ID:</strong> <?= $row['hotel_id'] ?></p>
                                 <p class="text-sm text-gray-600"><strong>Email:</strong> <?= htmlspecialchars($row['customer_email']) ?></p>
                                 <p class="text-sm text-gray-600">
-                                    <strong>Room:</strong> <?= htmlspecialchars($row['roomType']) ?> |
-                                    <?= $row['qtyRooms'] ?> room(s) for <?= $row['nights'] ?> night(s)
+                                    <strong>Room:</strong> <?= htmlspecialchars($row['roomType']) ?> 
+                                    
+                                    <p><?= $row['qtyRooms'] ?> room(s) for <?= $row['nights'] ?> night(s)</p>
                                 </p>
                                 <p class="text-sm text-gray-600">
                                     <strong>Check-in:</strong> <?= $row['check_in_date'] ?><br>

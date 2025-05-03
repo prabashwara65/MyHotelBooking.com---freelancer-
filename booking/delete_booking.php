@@ -16,7 +16,7 @@ if (isset($_POST['booking_id'])) {
 
     // Redirect back to the main page with a success message
     $_SESSION['success_message'] = "Booking deleted successfully!";
-    header("Location: /myhotelbooking.com/booking/view_booking.php"); // Adjust the redirect as per your needs
+    header("Location: /myhotelbooking.com/booking/bookings.php"); // Adjust the redirect as per your needs
     exit();
 }
 

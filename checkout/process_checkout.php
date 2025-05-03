@@ -95,7 +95,7 @@ if ($stmt->execute()) {
     $stmt->close();
     $conn->close();
 
-    header("Location: /myhotelbooking.com/booking/view_booking.php");
+    header("Location: /myhotelbooking.com/booking/bookings.php");
     exit();
 
 } else {

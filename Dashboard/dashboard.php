@@ -1,86 +1,90 @@
 <?php
 
 session_start();
-// Example: Assume user logs in somewhere and $_SESSION['username'] is set
+include '../db.php';
+
+$hotels = [];
+$sql = "SELECT * FROM hotels ORDER BY hotel_name ASC";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $hotels[] = $row;
+    }
+}
 
 ?>
-<!-- 
-<pre>
-<?php print_r($_SESSION); ?>
-</pre> -->
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Dashboard</title>
-    <link rel="stylesheet" href="dashboard.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </head>
-<body>
+<body class="flex min-h-screen min-h-0 font-sans bg-gray-100">
 
 <!-- Sidebar -->
-<div class="sidebar">
-    <div class="logo">
-        <i class="fas fa-hotel"></i>
-        <span>My Dashboard</span>
+<aside class="w-64 bg-gray-900 text-white p-6 flex flex-col">
+    <div class="text-2xl font-bold mb-10 text-center">
+        <i class="fas fa-hotel mr-2"></i>My Hotel Booking
     </div>
-    <ul class="nav-links">
-        <li><a href="#">Dashboard</a></li>
-        <li><a href="#">Analytics</a></li>
-        <li><a href="#">Settings</a></li>
-        <li><a href="#">Users</a></li>
+    <ul class="space-y-4">
+        <li><a href="#" class="hover:text-yellow-400 text-lg">Dashboard</a></li>
+        <li><a href="#" class="hover:text-yellow-400 text-lg">Analytics</a></li>
+        <li><a href="#" class="hover:text-yellow-400 text-lg">Settings</a></li>
+        <li><a href="#" class="hover:text-yellow-400 text-lg">Users</a></li>
     </ul>
-</div>
+</aside>
 
-<!-- Main Content Area -->
-<div class="main-content">
+<!-- Main Content -->
+<main class="flex-1 p-6 overflow-y-hidden">
     <!-- Top Bar -->
-    <div class="top-bar">
-        <div class="dashboard-title">Dashboard</div>
-        <div class="top-right">
-        <div class="auth-buttons">
-                    <?php if (isset($_SESSION['name'])): ?>
-                        <span class="welcome-msg">Welcome, <?= htmlspecialchars($_SESSION['name']) ?></span>
-                        <a href="/myhotelbooking.com/Auth/logout.php" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                    <?php else: ?>
-                        <a href="/myhotelbooking.com/Auth/login.html" class="btn">Login</a>
-                        <a href="/myhotelbooking.com/Auth/register.php" class="btn">Sign Up</a>
-                    <?php endif; ?>
+    <div class="flex justify-between items-center bg-white p-4 rounded-lg shadow mb-6">
+
+            <!-- Display Success Message -->
+            <?php if (isset($_SESSION['success_message'])): ?>
+            <div class="p-4 mb-4 text-white bg-green-500 rounded-lg">
+                <?= $_SESSION['success_message'] ?>
+            </div>
+            <?php unset($_SESSION['success_message']); // Remove the message after displaying it ?>
+        <?php endif; ?>
+
+        <h1 class="text-2xl font-bold">Dashboard</h1>
+        <div class="flex items-center">
+            <?php if (isset($_SESSION['name'])): ?>
+                <span class="text-gray-600 font-medium mr-4">Welcome, <?= htmlspecialchars($_SESSION['name']) ?></span>
+                <a href="/myhotelbooking.com/Auth/logout.php" class="bg-red-500 text-white font-semibold px-4 py-2 rounded-full hover:bg-red-600 shadow inline-flex items-center">
+                    <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                </a>
+            <?php else: ?>
+                <a href="/myhotelbooking.com/Auth/login.html" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Login</a>
+                <a href="/myhotelbooking.com/Auth/register.php" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 ml-2">Sign Up</a>
+            <?php endif; ?>
+        </div>
+    </div>
+
+   <!-- Hotel Cards Container with Scroll -->
+<div class="max-h-[600px] overflow-y-auto pr-2">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+        <?php foreach ($hotels as $hotel): ?>
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+            <img src="<?= htmlspecialchars($hotel['image_url'] ?: 'https://via.placeholder.com/300x150?text=No+Image') ?>" alt="Hotel Image" class="w-full h-40 object-cover">
+            <div class="p-4">
+                <h3 class="text-xl font-bold text-gray-800 mb-1"><?= htmlspecialchars($hotel['hotel_name']) ?></h3>
+                <p class="text-sm text-gray-600 mb-2"><?= htmlspecialchars($hotel['location']) ?></p>
+                <p class="text-sm text-gray-700"><?= htmlspecialchars($hotel['description']) ?></p>
+                <div class="mt-4 text-right">
+                    <a href="/myhotelbooking.com/hotels/edit_hotel.php?id=<?= $hotel['id'] ?>" class="inline-block bg-blue-500 text-white text-sm px-4 py-2 rounded hover:bg-blue-600">Edit Hotel</a>
                 </div>
+            </div>
         </div>
-    </div>
-
-    <!-- Stats Overview -->
-    <div class="stats-overview">
-        <div class="stat-card">
-            <div class="stat-title">Total Sales</div>
-            <div class="stat-value">$45,600</div>
-            <div class="stat-change">+15%</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-title">New Users</div>
-            <div class="stat-value">1,200</div>
-            <div class="stat-change">+20%</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-title">Orders</div>
-            <div class="stat-value">300</div>
-            <div class="stat-change">-5%</div>
-        </div>
-    </div>
-
-    <!-- Recent Activity -->
-    <div class="recent-activity">
-        <div class="recent-activity-title">Recent Activity</div>
-        <ul class="activity-list">
-            <li>Order #1243 placed (2 hours ago)</li>
-            <li>New user registration (1 day ago)</li>
-            <li>Order #1242 shipped (3 days ago)</li>
-        </ul>
+        <?php endforeach; ?>
     </div>
 </div>
 
-<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</main>
+
 </body>
 </html>

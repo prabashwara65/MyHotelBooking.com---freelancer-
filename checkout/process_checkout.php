@@ -1,5 +1,6 @@
 <?php
 session_start(); // Start the session
+ob_start(); // Enable output buffering
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -27,21 +28,21 @@ $qtyRooms = filter_var($_POST['qtyRooms'], FILTER_SANITIZE_STRING);
 $checkInDate = date('Y-m-d', strtotime($_POST['check_in_date']));
 $checkOutDate = date('Y-m-d', strtotime($_POST['check_out_date']));
 
-// Validate date formats (check if valid date)
-if (!DateTime::createFromFormat('Y-m-d', $checkInDate) || $checkInDate === false) {
+if (!DateTime::createFromFormat('Y-m-d', $checkInDate)) {
     echo "<p>Error: Invalid check-in date format. Please use YYYY-MM-DD.</p>";
+    ob_end_flush();
     exit();
 }
 
-if (!DateTime::createFromFormat('Y-m-d', $checkOutDate) || $checkOutDate === false) {
+if (!DateTime::createFromFormat('Y-m-d', $checkOutDate)) {
     echo "<p>Error: Invalid check-out date format. Please use YYYY-MM-DD.</p>";
+    ob_end_flush();
     exit();
 }
 
 // Debugging: Check if dates are being correctly formatted
 echo "<p><strong>Check-in Date:</strong> $checkInDate</p>";
 echo "<p><strong>Check-out Date:</strong> $checkOutDate</p>";
-
 
 // Show received values (for debugging or confirmation)
 echo "<h3>Received Booking Information</h3>";
@@ -57,8 +58,6 @@ echo "<p><strong>Expiration Date:</strong> $expDate</p>";
 echo "<p><strong>CVV:</strong> [Hidden]</p>";
 echo "<p><strong>Cardholder Name:</strong> $cardholderName</p>";
 echo "<p><strong>Billing Address:</strong> $billingAddress</p>";
-echo "<p><strong>Check-in Date:</strong> $checkInDate</p>";
-echo "<p><strong>Check-out Date:</strong> $checkOutDate</p>";
 
 // Prepare the SQL query
 $stmt = $conn->prepare("INSERT INTO bookings (
@@ -66,9 +65,10 @@ $stmt = $conn->prepare("INSERT INTO bookings (
     check_in_date, check_out_date, nights, roomType, qtyRooms, total, booking_date
 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP())");
 
-// Check if the statement preparation was successful
 if ($stmt === false) {
-    die('SQL prepare error: ' . $conn->error);
+    echo "<p style='color: red;'>SQL prepare error: " . $conn->error . "</p>";
+    ob_end_flush();
+    exit();
 }
 
 $stmt->bind_param("isssssssssiiid",
@@ -80,21 +80,29 @@ $stmt->bind_param("isssssssssiiid",
     $cvv,
     $cardholderName,
     $billingAddress,
-    $checkInDate,    // string (date)
-    $checkOutDate,   // string (date)
-    $nights,         // int
-    $roomType,       // int
-    $qtyRooms,       // int
-    $total           // double
+    $checkInDate,
+    $checkOutDate,
+    $nights,
+    $roomType,
+    $qtyRooms,
+    $total
 );
 
-// Execute the query and check for success
 if ($stmt->execute()) {
-    echo "<p style='color: green;'>Booking successful!</p>";
+    $bookingId = $stmt->insert_id; // ✅ Get the last inserted ID
+    $_SESSION['success_message'] = "Booking added successfully! (Booking ID: $bookingId)";
+
+    $stmt->close();
+    $conn->close();
+
+    header("Location: /myhotelbooking.com/booking/view_booking.php");
+    exit();
+
 } else {
     echo "<p style='color: red;'>Error: " . $stmt->error . "</p>";
+    $stmt->close();
+    $conn->close();
+    ob_end_flush();
+    exit();
 }
-
-$stmt->close();
-$conn->close();
 ?>

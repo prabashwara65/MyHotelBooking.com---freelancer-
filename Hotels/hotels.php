@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotels | MyHotelBooking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="hotels.css">
     <style>
         
@@ -11,11 +12,39 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <!-- Header -->
-    <?php
-    // Include the header
-    include('../Component/header.php');
-    ?>
+   
+   <!-- Header -->
+   <header class="bg-white shadow-md py-4 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center space-x-2 text-white text-xl font-bold">
+                <i class="fas fa-hotel text-blue-500"></i>
+                <span class="text-blue-500">MyHotelBooking</span>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="mt-4 md:mt-0 flex flex-wrap justify-center md:justify-start space-x-4 text-black font-medium">
+                <a href="/myhotelbooking.com/home/home.php" class="hover:text-gray-800">Home</a>
+                <a href="/myhotelbooking.com/hotels/hotels.php" class="hover:text-gray-800">Hotels</a>
+                <a href="#" class="hover:text-gray-800">Destinations</a>
+                <a href="#" class="hover:text-gray-800">Deals</a>
+                <a href="#" class="hover:text-gray-800">About</a>
+            </nav>
+
+            <!-- Auth Buttons -->
+            <div class="mt-4 md:mt-0 flex items-center space-x-3">
+                <?php if (isset($_SESSION['name'])): ?>
+                    <span class="text-sm font-medium text-gray-600">Welcome, <?= htmlspecialchars($_SESSION['name']) ?></span>
+                    <a href="/myhotelbooking.com/Auth/logout.php" class="logout-btn flex items-center">
+                        <i class="fas fa-sign-out-alt mr-1"></i> Logout
+                    </a>
+                <?php else: ?>
+                    <a href="/myhotelbooking.com/Auth/login.html" class="btn bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-indigo-600 transition">Login</a>
+                    <a href="/myhotelbooking.com/Auth/register.php" class="btn bg-gray-200 text-gray-800 px-4 py-2 rounded-full hover:bg-gray-300 transition">Sign Up</a>
+                <?php endif; ?>
+            </div>
+        </div>
+    </header>
 
     <!-- Main Content -->
     <main class="container">
@@ -95,55 +124,11 @@
                 </div>
     </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h3>MyHotelBooking</h3>
-                    <ul>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="careers.html">Careers</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="press.html">Press</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>Support</h3>
-                    <ul>
-                        <li><a href="faq.html">FAQs</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                        <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="terms.html">Terms of Service</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>Destinations</h3>
-                    <ul>
-                        <li><a href="destinations.html#thailand">Thailand</a></li>
-                        <li><a href="destinations.html#france">France</a></li>
-                        <li><a href="destinations.html#japan">Japan</a></li>
-                        <li><a href="destinations.html#italy">Italy</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>Business</h3>
-                    <ul>
-                        <li><a href="partners.html">Hotel Partners</a></li>
-                        <li><a href="affiliate.html">Affiliate Program</a></li>
-                        <li><a href="developers.html">Developer API</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>&copy; 2023 MyHotelBooking. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    
+    <?php
+    // Include the header
+    include('../Component/footer.php');
+    ?>
 
     <script>
         // Simple filter functionality

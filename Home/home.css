@@ -1,4 +1,4 @@
-/* Global Styles */
+/* Global Styles
 :root {
     --primary: #4361ee;
     --secondary: #3f37c9;
@@ -24,56 +24,8 @@ body {
     width: 90%;
     max-width: 1400px;
     margin: 0 auto;
-}
+} */
 
-/* Header Styles */
-header {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: white;
-    padding: 1rem 0;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    font-size: 1.8rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-}
-
-.logo i {
-    margin-right: 10px;
-    color: var(--accent);
-}
-
-.nav-links {
-    display: flex;
-    gap: 2rem;
-}
-
-.nav-links a {
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.nav-links a:hover {
-    color: var(--accent);
-}
-
-.auth-buttons .btn {
-    margin-left: 1rem;
-}
 
 /* Hero Section */
 .hero {

@@ -25,7 +25,7 @@ if (session_status() == PHP_SESSION_NONE) {
             </div>
 
             <!-- Navigation Links -->
-            <nav class="mt-4 md:mt-0 flex flex-wrap justify-center md:justify-start space-x-4 text-gray-600 font-medium">
+            <nav class="mt-4 md:mt-0 flex flex-wrap justify-center md:justify-start space-x-4 text-black font-medium">
                 <a href="/myhotelbooking.com/home/home.php" class="hover:text-indigo-600">Home</a>
                 <a href="/myhotelbooking.com/hotels/hotels.php" class="hover:text-indigo-600">Hotels</a>
                 <a href="#" class="hover:text-indigo-600">Destinations</a>
@@ -41,7 +41,7 @@ if (session_status() == PHP_SESSION_NONE) {
                         <i class="fas fa-sign-out-alt mr-1"></i> Logout
                     </a>
                 <?php else: ?>
-                    <a href="/myhotelbooking.com/Auth/login.html" class="btn bg-indigo-500 text-white px-4 py-2 rounded-full hover:bg-indigo-600 transition">Login</a>
+                    <a href="/myhotelbooking.com/Auth/login.php" class="btn bg-indigo-500 text-white px-4 py-2 rounded-full hover:bg-indigo-600 transition">Login</a>
                     <a href="/myhotelbooking.com/Auth/register.php" class="btn bg-gray-200 text-gray-800 px-4 py-2 rounded-full hover:bg-gray-300 transition">Sign Up</a>
                 <?php endif; ?>
             </div>

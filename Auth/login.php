@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <title>MyHotelBooking - Login</title>
 </head>
@@ -112,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="flex min-h-screen">
 
        <!-- Blue Card on the Left -->
-        <div class="flex-1 bg-blue-500 text-white p-10 flex">
+        <div class="flex-1 bg-[#3D34C4] text-white p-10 flex">
             <div>
                 <h2 class="text-4xl font-bold mb-4">Welcome Back!</h2>
                 <p>Login to manage your bookings, save favorites, and access exclusive member deals.</p>

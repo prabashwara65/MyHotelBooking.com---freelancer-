@@ -114,9 +114,9 @@ include('../Component/header.php');
         <div class="w-full md:w-[70%]">
             <img src="/myhotelbooking.com/images/rooms/<?php echo strtolower(str_replace(' ', '_', $roomType)); ?>.jpg"
                  alt="<?php echo htmlspecialchars($roomType); ?>"
-                 class="rounded-xl shadow-2xl w-full object-cover h-[400px]">
+                 class="rounded-xl shadow-2xl w-full object-cover h-[450px]">
             <!-- Room Description -->
-            <div class="bg-white shadow-lg rounded-xl mt-6 p-6">
+            <div class="bg-white shadow-lg rounded-xl mt-8 p-10">
                 <h2 class="text-2xl font-semibold mb-4">
                     <i class="fas fa-bed text-indigo-500 mr-2"></i><?php echo htmlspecialchars($roomType); ?> Features
                 </h2>
@@ -221,6 +221,9 @@ include('../Component/header.php');
     </div>
 </div>
 
-
+<?php
+    // Include the header
+    include('../Component/footer.php');
+    ?>
 </body>
 </html>

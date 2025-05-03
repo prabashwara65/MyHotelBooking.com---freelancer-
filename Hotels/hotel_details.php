@@ -26,7 +26,7 @@ $row = $result->fetch_assoc();
     <title><?php echo htmlspecialchars($row['hotel_name']); ?> - Details</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="hotel_details.css">
+ 
     <style>
         .hotel-banner img {
             width: 100%;
@@ -76,20 +76,42 @@ $row = $result->fetch_assoc();
     <div class="mb-6">
         
 
-        <div class="mt-6">
-            <h4 class="text-2xl font-semibold text-gray-800">Features</h4>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-                <?php 
-                $features = explode(',', $row['features']);
-                foreach ($features as $feature): 
-                ?>
-                    <div class="bg-white p-4 rounded-lg shadow-md text-center">
-                        <i class="fas fa-check-circle text-green-500 text-2xl mb-2"></i>
-                        <p class="text-gray-700"><?php echo trim($feature); ?></p>
-                    </div>
-                <?php endforeach; ?>
+    <div class="mt-6">
+    <h4 class="text-2xl font-semibold text-gray-800">Features</h4>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+        <?php 
+        $features = explode(',', $row['features']);
+
+        // Map keywords to Font Awesome icons
+        $iconMap = [
+            'wifi' => 'fa-wifi',
+            'parking' => 'fa-parking',
+            'pool' => 'fa-swimming-pool',
+            'gym' => 'fa-dumbbell',
+            'restaurant' => 'fa-utensils',
+            'spa' => 'fa-spa',
+            'bar' => 'fa-cocktail',
+            'ac' => 'fa-fan',
+            'tv' => 'fa-tv',
+            'laundry' => 'fa-soap',
+            'breakfast' => 'fa-mug-hot',
+            'room service' => 'fa-concierge-bell',
+            'pet' => 'fa-dog',
+            'security' => 'fa-shield-alt'
+        ];
+
+        foreach ($features as $feature): 
+            $trimmed = strtolower(trim($feature));
+            $icon = $iconMap[$trimmed] ?? 'fa-check-circle'; // Default icon
+        ?>
+            <div class="bg-white p-4 rounded-lg shadow-md text-center">
+                <i class="fas <?= $icon ?> text-indigo-500 text-2xl mb-2"></i>
+                <p class="text-gray-700 capitalize"><?= htmlspecialchars($trimmed) ?></p>
             </div>
-        </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+
 
         <div class="mt-6">
             <h4 class="text-2xl font-semibold text-gray-800">Available Room Types</h4>
@@ -106,10 +128,33 @@ $row = $result->fetch_assoc();
                     </div>
                 <?php endforeach; ?>
             </div>
+            
         </div>
-
+        <div class="w-full mt-6">
+            <h4 class="text-2xl font-semibold text-gray-800 mb-4">Hotel Location on Map</h4>
+            <!-- Map Section -->
+            <div class="w-full h-80 rounded-lg overflow-hidden shadow-md">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.566487753955!2d100.55690231534712!3d13.74649060139961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29edcfb15ae2b%3A0xb3f399fbdb9ddf6c!2sSukhumvit%20Road%2C%20Khlong%20Toei%2C%20Bangkok%2C%20Thailand!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus"
+                    class="w-full h-full border-0"
+                    allowfullscreen="true"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                ></iframe>
     </div>
 </div>
 
+
+    </div>
+    
+</div>
+
+<?php
+    // Include the footer
+    include('../Component/footer.php');
+    ?>
+   </div>
 </body>
+
+
 </html>

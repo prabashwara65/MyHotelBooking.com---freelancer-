@@ -33,6 +33,12 @@ if ($result->num_rows > 0) {
 </head>
 <body class="bg-gray-100 p-6">
     <div class="max-w-7xl mx-auto bg-white rounded-lg shadow p-6">
+        <!-- Add New Hotel Button -->
+    <div class="flex justify-end mb-4 pr-2">
+        <a href="/myhotelbooking.com/hotels/add_hotel.php" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 shadow">
+            + Add New Hotel
+        </a>
+    </div>
         <h1 class="text-2xl font-bold mb-6">All Hotel Bookings</h1>
         <!-- Table displaying the bookings -->
         <table class="min-w-full divide-y divide-gray-200">

@@ -49,8 +49,8 @@ if ($_SESSION["role"] !== 'admin') {
     <ul class="space-y-4">
         <li><a href="#" class="hover:text-yellow-400 text-lg">Dashboard</a></li>
         <li><a href="#" class="hover:text-yellow-400 text-lg">Analytics</a></li>
-        <li><a href="#" onclick="loadContent('all_bookings.php')" class="hover:text-yellow-400 text-lg">All Bookings</a></li>
-        <li><a href="#" class="hover:text-yellow-400 text-lg">Users</a></li>
+        <li><a href="#" onclick="loadContent('/all_bookings.php')" class="hover:text-yellow-400 text-lg">All Bookings</a></li>
+        <li><a href="#" onclick="loadContent('/all_users.php')" class="hover:text-yellow-400 text-lg">Users</a></li>
     </ul>
 </aside>
 
@@ -86,7 +86,7 @@ if ($_SESSION["role"] !== 'admin') {
         const container = document.getElementById('main-content');
         container.innerHTML = '<div class="text-center p-10 text-gray-500">Loading...</div>';
 
-        fetch('/myhotelbooking.com/Component/all_bookings.php/' + file)
+        fetch('/myhotelbooking.com/Component/' + file)
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
                 return response.text();
@@ -99,15 +99,6 @@ if ($_SESSION["role"] !== 'admin') {
             });
 }
     </script>
-
-
-   <!-- Hotel Cards Container with Scroll -->
-    <!-- Add New Hotel Button -->
-    <div class="flex justify-end mb-4 pr-2">
-        <a href="/myhotelbooking.com/hotels/add_hotel.php" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 shadow">
-            + Add New Hotel
-        </a>
-    </div>
 
     <!-- Hotel Cards -->
     <div id="main-content" class="max-h-[600px] overflow-y-auto pr-2">

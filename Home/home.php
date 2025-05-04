@@ -10,7 +10,6 @@ include '../db.php';
   <title>MyHotelBooking - Find Your Perfect Stay</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="home.css" />
-  <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -19,10 +18,8 @@ include '../db.php';
 
 <!-- Hero Section -->
 <section class="h-[70vh] bg-[url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80')] bg-cover bg-center flex items-center text-white text-center relative">
-  <!-- Overlay -->
-  <div class="absolute inset-0 bg-black/50"></div>
 
-  <!-- Content -->
+  <div class="absolute inset-0 bg-black/50"></div>
   <div class="relative w-full px-4">
     <div class="max-w-4xl mx-auto">
       <h1 class="text-4xl md:text-5xl font-bold mt-40 mb-4">Discover Your Perfect Stay</h1>

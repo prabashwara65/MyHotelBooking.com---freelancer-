@@ -20,52 +20,11 @@
 
     <!-- Main Content -->
     <main class="container">
-        <!-- Filters Section -->
-        <!-- <section class="filters">
-            <div class="filter-grid">
-                <div class="filter-group">
-                    <h3>Price Range</h3>
-                    <div class="filter-options">
-                        <button class="filter-btn">AED 0 - AED 100</button>
-                        <button class="filter-btn active">AED 100 - AED 200</button>
-                        <button class="filter-btn">AED 200 - AED 300</button>
-                        <button class="filter-btn">AED 300+</button>
-                    </div>
-                </div>
-                
-                <div class="filter-group">
-                    <h3>Rating</h3>
-                    <div class="filter-options">
-                        <button class="filter-btn">3★+</button>
-                        <button class="filter-btn active">4★+</button>
-                        <button class="filter-btn">5★</button>
-                    </div>
-                </div>
-                
-                <div class="filter-group">
-                    <h3>Amenities</h3>
-                    <div class="filter-options">
-                        <button class="filter-btn"><i class="fas fa-wifi"></i> WiFi</button>
-                        <button class="filter-btn"><i class="fas fa-swimming-pool"></i> Pool</button>
-                        <button class="filter-btn"><i class="fas fa-utensils"></i> Restaurant</button>
-                        <button class="filter-btn"><i class="fas fa-spa"></i> Spa</button>
-                    </div>
-                </div>
-                
-                <div class="filter-group">
-                    <h3>Eco-Friendly</h3>
-                    <div class="filter-options">
-                        <button class="filter-btn"><i class="fas fa-leaf"></i> Sustainable</button>
-                        <button class="reset-btn">Reset All</button>
-                    </div>
-                </div>
-            </div>
-        </section> -->
+       
         <?php
-                // Include the hotel list
-                include('../Component/filter_section.php');
-            ?>
-
+            // Include the hotel list
+            include('../Component/filter_section.php');
+        ?>
 
        <div class="flex flex-row">
 
@@ -107,7 +66,6 @@
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 this.classList.toggle('active');
-                // In a real app, you would filter results here
             });
         });
         

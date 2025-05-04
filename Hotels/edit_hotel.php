@@ -13,7 +13,6 @@ if (!$id) {
     die("Hotel ID is required.");
 }
 
-// Ensure $conn (MySQLi) is available and valid
 if (!$conn) {
     die("Database connection is not available.");
 }
@@ -32,7 +31,6 @@ if (!$hotel) {
 
 // --- Update Hotel ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get POST data
     $hotel_name = $_POST['hotel_name'];
     $location = $_POST['location'];
     $description = $_POST['description'];

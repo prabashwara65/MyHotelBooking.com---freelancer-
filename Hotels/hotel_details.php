@@ -82,7 +82,7 @@ $row = $result->fetch_assoc();
         <?php 
         $features = explode(',', $row['features']);
 
-        // Map keywords to Font Awesome icons
+        // Map icons
         $iconMap = [
             'free high-speed wifi' => 'fa-wifi',
             'rooftop infinity pool' => 'fa-swimming-pool',
@@ -96,7 +96,8 @@ $row = $result->fetch_assoc();
 
         foreach ($features as $feature): 
             $trimmed = strtolower(trim($feature));
-            $icon = $iconMap[$trimmed] ?? 'fa-check-circle'; // Default icon
+            // Default icon when icons not loaded 
+            $icon = $iconMap[$trimmed] ?? 'fa-check-circle'; 
         ?>
             <div class="flex gap-4 items-center bg-white p-4 rounded-lg shadow-md ">
                 <i class="fas <?= $icon ?> text-black text-2xl mb-2"></i>
@@ -125,7 +126,7 @@ $row = $result->fetch_assoc();
             
         </div>
         <div class="w-full mt-6 flex">
-            <!-- Map Section (60% of the screen) -->
+            <!-- Map Section  -->
             <div class="w-3/5 ">
                 <h4 class="text-2xl font-semibold text-gray-800 mb-4">Hotel Location on Map</h4>
                 <div class="w-full h-[580px] rounded-lg overflow-hidden shadow-md">
@@ -139,7 +140,7 @@ $row = $result->fetch_assoc();
                 </div>
             </div>
 
-            <!-- Contact Form Section (40% of the screen) -->
+            <!-- Contact Form Section  -->
             <div class="w-2/5 pl-4">
                 
                 <!-- Importing the contact form -->

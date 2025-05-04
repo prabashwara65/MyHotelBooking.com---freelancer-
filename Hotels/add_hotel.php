@@ -9,7 +9,6 @@ error_reporting(E_ALL);
 
 // --- Insert Hotel ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get POST data
     $hotel_name = $_POST['hotel_name'];
     $location = $_POST['location'];
     $description = $_POST['description'];
@@ -30,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("sssdsssssss", $hotel_name, $location, $description, $price, $rating, $image_url, $is_best_seller, $is_eco_certified, $link, $room_types, $features);
 
     if ($stmt->execute()) {
+        
         // Redirect on success
         header("Location: /myhotelbooking.com/dashboard/dashboard.php");
         exit;

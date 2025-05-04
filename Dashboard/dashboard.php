@@ -17,7 +17,8 @@ if ($result->num_rows > 0) {
 }
 
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    // Not logged in
+
+    // if user Not logged in
     header("Location: /myhotelbooking.com/login/login.php");
     exit;
 }
@@ -64,7 +65,7 @@ if ($_SESSION["role"] !== 'admin') {
             <div class="p-4 mb-4 text-white bg-green-500 rounded-lg">
                 <?= $_SESSION['success_message'] ?>
             </div>
-            <?php unset($_SESSION['success_message']); // Remove the message after displaying it ?>
+            <?php unset($_SESSION['success_message']);  ?>
         <?php endif; ?>
 
         <h1 class="text-2xl font-bold">Dashboard</h1>

@@ -33,7 +33,7 @@ foreach ($roomTypes as $room) {
     $roomDetails[trim($room)] = [
         'description' => 'A cozy and modern room with top-notch amenities for your comfort.',
         'features' => ['Free High-Speed WiFi', 'rooftop infinity pool', '4 restaurants & bars', 'eforea spa', '24/7 fitness center','concierge service','business center','kids club'],
-        'price' => rand(150, 300) // AED
+        'price' => rand(150, 300) 
     ];
 }
 
@@ -80,7 +80,7 @@ include('../Component/header.php');
 
         function updatePrice() {
             const qty = parseInt(qtyInput.value) || 1;
-            const nights = parseInt(nightsInput.value) || 1; // Nights input
+            const nights = parseInt(nightsInput.value) || 1; 
             const tax = qty * nights * price * taxRate;
             totalPrice = qty * nights * price + tax;
             const usd = totalPrice * AED_TO_USD;
@@ -162,8 +162,8 @@ include('../Component/header.php');
 
         <script>
             // Initial variables for the price and currency conversion
-            const pricePerNight = <?php echo $roomData['price']; ?>; // Get room price from PHP
-            const usdExchangeRate = 0.27; // Example conversion rate (AED to USD)
+            const pricePerNight = <?php echo $roomData['price']; ?>; 
+            const usdExchangeRate = 0.27; 
 
             // Get elements for calculation updates
             const roomQtyInput = document.getElementById('roomQty');
@@ -195,11 +195,9 @@ include('../Component/header.php');
                 usdPriceElement.textContent = usdPrice.toFixed(2);
             }
 
-            // Add event listeners for changes in the input fields
             roomQtyInput.addEventListener('input', calculatePrice);
             nightsQtyInput.addEventListener('input', calculatePrice);
 
-            // Call the calculatePrice function on page load to initialize values
             calculatePrice();
         </script>
 

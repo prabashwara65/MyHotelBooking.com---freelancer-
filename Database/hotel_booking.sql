@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 04, 2025 at 07:48 AM
+-- Generation Time: May 04, 2025 at 08:11 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -52,12 +52,12 @@ CREATE TABLE `bookings` (
 --
 
 INSERT INTO `bookings` (`booking_id`, `hotel_id`, `customer_name`, `customer_email`, `roomType`, `check_in_date`, `check_out_date`, `nights`, `exp_date`, `qtyRooms`, `total`, `card_number`, `cvv`, `cardholder_name`, `billing_address`, `booking_date`, `features`) VALUES
-(5, 1, 'name1', 'name1@gmail.com', '0', '2025-05-03', '2025-05-15', 2, 4353, 1, 162, '34343', '435', 'fgfdfg', 'sdsd', '2025-05-03 04:08:54', ''),
-(7, 1, 'name1', 'name1@gmail.com', '0', '2025-05-03', '2025-05-15', 2, 4353, 1, 162, '34343', '435', 'fgfdfg', 'dfds', '2025-05-03 04:12:33', ''),
-(19, 2, 'name1', 'name1@gmail.com', '0', '2025-05-03', '2025-05-13', 1, 435, 1, 68, '353453', '4353', 'gdf', 'fgfh', '2025-05-03 05:10:23', ''),
-(21, 6, 'john', 'john@gmail.com', '0', '2025-05-03', '2025-05-15', 2, 4534, 1, 118, '2323423432', '5345', 'dfdg', 'fdgd', '2025-05-03 10:28:21', ''),
 (36, 4, 'admin', 'admin@gmail.com', '0', '2025-05-04', '2025-05-13', 2, 3424, 1, 90, '324242', '434', 'dfsfds', 'fgd', '2025-05-04 03:55:08', '[\"Free High-Speed WiFi\",\"4 restaurants & bars\"]'),
-(39, 6, 'admin', 'admin@gmail.com', '0', '2025-05-04', '2025-05-14', 10, 4545, 10, 8392, '45435', '4534', '4535', '453', '2025-05-04 04:12:21', '[\"Free High-Speed WiFi\"]');
+(39, 6, 'admin', 'admin@gmail.com', '0', '2025-05-04', '2025-05-14', 10, 4545, 10, 8392, '45435', '4534', '4535', '453', '2025-05-04 04:12:21', '[\"Free High-Speed WiFi\"]'),
+(42, 3, 'name1', 'name1@gmail.com', '0', '2025-05-04', '2025-05-06', 1, 34535, 1, 43, '34343', '4353', 'dsfs', 'dsfs', '2025-05-04 05:52:16', '[\"4 restaurants & bars\",\"eforea spa\",\"concierge service\"]'),
+(43, 3, 'john', 'john@gmail.com', '0', '2025-05-04', '2025-05-14', 3, 225, 2, 417, '1234234545674567', '123', 'john', 'john,home', '2025-05-04 05:55:40', '[\"Free High-Speed WiFi\",\"rooftop infinity pool\",\"4 restaurants & bars\"]'),
+(44, 6, 'john', 'john@gmail.com', '0', '2025-05-04', '2025-05-14', 1, 325, 5, 240, '3467263587645638', '345', 'john', 'john, home', '2025-05-04 05:56:52', '[\"24\\/7 fitness center\",\"business center\",\"kids club\"]'),
+(45, 4, 'jenny', 'jenny@gmail.com', '0', '2025-05-04', '2025-05-28', 2, 1225, 2, 284, '6746537287536541', '456', 'jenny', 'jenny, home', '2025-05-04 05:58:51', '[\"Free High-Speed WiFi\",\"4 restaurants & bars\",\"eforea spa\",\"concierge service\"]');
 
 -- --------------------------------------------------------
 
@@ -112,8 +112,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `phone`, `password`, `role`) VALUES
 (3, 'name1', 'name1@gmail.com', '54645645', 'name1', 'user'),
 (4, 'admin', 'admin@gmail.com', '45456456', 'admin', 'admin'),
-(5, 'name2', 'name2@gmail.com', '75675', 'name2', 'user'),
-(6, 'john', 'john@gmail.com', '1111111111', 'john', 'user');
+(6, 'john', 'john@gmail.com', '1111111111', 'john', 'user'),
+(9, 'jenny', 'jenny@gmail.com', '1234567893', 'jenny', 'user');
 
 --
 -- Indexes for dumped tables
@@ -145,7 +145,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `hotels`
@@ -157,7 +157,7 @@ ALTER TABLE `hotels`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

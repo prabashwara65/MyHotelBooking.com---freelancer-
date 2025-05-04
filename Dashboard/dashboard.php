@@ -102,23 +102,42 @@ if ($_SESSION["role"] !== 'admin') {
 
 
    <!-- Hotel Cards Container with Scroll -->
-<div id="main-content" class="max-h-[600px] overflow-y-auto pr-2">
+    <!-- Add New Hotel Button -->
+    <div class="flex justify-end mb-4 pr-2">
+        <a href="/myhotelbooking.com/hotels/add_hotel.php" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 shadow">
+            + Add New Hotel
+        </a>
+    </div>
+
+    <!-- Hotel Cards -->
+    <div id="main-content" class="max-h-[600px] overflow-y-auto pr-2">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
         <?php foreach ($hotels as $hotel): ?>
-        <div class="bg-white rounded-lg shadow overflow-hidden">
+        <div class="bg-white rounded-lg shadow overflow-hidden flex flex-col h-full">
             <img src="<?= htmlspecialchars($hotel['image_url'] ?: 'https://via.placeholder.com/300x150?text=No+Image') ?>" alt="Hotel Image" class="w-full h-40 object-cover">
-            <div class="p-4">
-                <h3 class="text-xl font-bold text-gray-800 mb-1"><?= htmlspecialchars($hotel['hotel_name']) ?></h3>
-                <p class="text-sm text-gray-600 mb-2"><?= htmlspecialchars($hotel['location']) ?></p>
-                <p class="text-sm text-gray-700"><?= htmlspecialchars($hotel['description']) ?></p>
-                <div class="mt-4 text-right">
-                    <a href="/myhotelbooking.com/hotels/edit_hotel.php?id=<?= $hotel['id'] ?>" class="inline-block bg-blue-500 text-white text-sm px-4 py-2 rounded hover:bg-blue-600">Edit Hotel</a>
+            <div class="p-4 flex flex-col flex-grow justify-between">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-1"><?= htmlspecialchars($hotel['hotel_name']) ?></h3>
+                    <p class="text-sm text-gray-600 mb-2"><?= htmlspecialchars($hotel['location']) ?></p>
+                    <p class="text-sm text-gray-700"><?= htmlspecialchars($hotel['description']) ?></p>
+                </div>
+                <div class="flex justify-between mt-4">
+                    <a href="/myhotelbooking.com/hotels/edit_hotel.php?id=<?= $hotel['id'] ?>" class="bg-blue-500 text-white text-sm px-4 py-2 rounded hover:bg-blue-600">
+                        Edit
+                    </a>
+                    <form method="POST" action="/myhotelbooking.com/hotels/delete_hotel.php" onsubmit="return confirm('Are you sure you want to delete this hotel?');">
+                        <input type="hidden" name="hotel_id" value="<?= $hotel['id'] ?>">
+                        <button type="submit" class="bg-red-500 text-white text-sm px-4 py-2 rounded hover:bg-red-600">
+                            Delete
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
         <?php endforeach; ?>
     </div>
 </div>
+
 
 </main>
 

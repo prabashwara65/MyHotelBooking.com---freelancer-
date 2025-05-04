@@ -124,18 +124,29 @@ $row = $result->fetch_assoc();
             </div>
             
         </div>
-        <div class="w-full mt-6">
-            <h4 class="text-2xl font-semibold text-gray-800 mb-4">Hotel Location on Map</h4>
-            <!-- Map Section -->
-            <div class="w-full h-80 rounded-lg overflow-hidden shadow-md">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.566487753955!2d100.55690231534712!3d13.74649060139961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29edcfb15ae2b%3A0xb3f399fbdb9ddf6c!2sSukhumvit%20Road%2C%20Khlong%20Toei%2C%20Bangkok%2C%20Thailand!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus"
-                    class="w-full h-full border-0"
-                    allowfullscreen="true"
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"
-                ></iframe>
-    </div>
+        <div class="w-full mt-6 flex">
+            <!-- Map Section (60% of the screen) -->
+            <div class="w-3/5 ">
+                <h4 class="text-2xl font-semibold text-gray-800 mb-4">Hotel Location on Map</h4>
+                <div class="w-full h-[580px] rounded-lg overflow-hidden shadow-md">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.566487753955!2d100.55690231534712!3d13.74649060139961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29edcfb15ae2b%3A0xb3f399fbdb9ddf6c!2sSukhumvit%20Road%2C%20Khlong%20Toei%2C%20Bangkok%2C%20Thailand!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus"
+                        class="w-full h-full border-0"
+                        allowfullscreen="true"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                    ></iframe>
+                </div>
+            </div>
+
+            <!-- Contact Form Section (40% of the screen) -->
+            <div class="w-2/5 pl-4">
+                
+                <!-- Importing the contact form -->
+                <?php include('../Component/contact_form.php'); ?>
+            </div>
+        </div>
+
 </div>
 
 

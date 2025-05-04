@@ -26,6 +26,18 @@ $sql = "SELECT * FROM bookings WHERE customer_email = '$user_email' ORDER BY boo
 $result = $conn->query($sql);
 $defaultImage = 'https://via.placeholder.com/150?text=No+Image';
 
+$featureIcons = [
+    'free high-speed wifi' => 'fa-wifi',
+    'rooftop infinity pool' => 'fa-swimming-pool',
+    '4 restaurants & bars' => 'fa-utensils',
+    'eforea spa' => 'fa-spa',
+    '24/7 fitness center' => 'fa-dumbbell',
+    'concierge service' => 'fa-concierge-bell',
+    'business center' => 'fa-business-time',
+    'kids club' => 'fa-child'
+];
+
+
 ?>
 
 <!DOCTYPE html>
@@ -34,6 +46,8 @@ $defaultImage = 'https://via.placeholder.com/150?text=No+Image';
     <meta charset="UTF-8">
     <title>Hotel Booking Cards</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 <body class="bg-gray-100 p-4">
     <div class="max-w-7xl mx-auto px-4 py-8">
@@ -43,6 +57,9 @@ $defaultImage = 'https://via.placeholder.com/150?text=No+Image';
             <?php if ($result->num_rows > 0): ?>
                 <?php while ($row = $result->fetch_assoc()): ?>
                     <?php
+
+                        $features = []; // ✅ Always reset features here
+
                         // Fetch hotel image URL based on hotel_id
                         $hotel_id = $row['hotel_id'];
                         $hotel_sql = "SELECT image_url FROM hotels WHERE id = $hotel_id";
@@ -50,8 +67,10 @@ $defaultImage = 'https://via.placeholder.com/150?text=No+Image';
                         $hotel_image = $defaultImage; // Default image
                         if ($hotel_result->num_rows > 0) {
                             $hotel_row = $hotel_result->fetch_assoc();
-                            $hotel_image = $hotel_row['image_url'] ?: $defaultImage; // Use hotel image if available
+                            $hotel_image = $hotel_row['image_url'] ?: $defaultImage; 
                         }
+
+                        $features = $row['features'] ? explode(',', $row['features']) : [];
                     ?>
 
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col">
@@ -81,7 +100,27 @@ $defaultImage = 'https://via.placeholder.com/150?text=No+Image';
                             <div class="sm:w-40 sm:h-auto flex  justify-center p-4">
                                 <img src="<?= htmlspecialchars($hotel_image) ?>" alt="Hotel Image" class="rounded-md object-cover w-full h-40">
                             </div>
+                            
+
                         </div>
+
+                        <?php if (!empty($features)): ?>
+                            <div class="mt-2 px-4 text-sm text-gray-700">
+                                <h4 class="font-semibold mb-1">Features:</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <?php foreach ($features as $feature): 
+                                        $feature = strtolower(trim($feature));  // Ensure the feature is lowercase and trimmed
+                                        $iconClass = isset($featureIcons[$feature]) ? $featureIcons[$feature] : 'fa-check-circle'; // Default icon if not found
+                                    ?>
+                                        <span class="flex items-center bg-gray-100 rounded-full px-3 py-1 text-gray-700 text-xs shadow-sm">
+                                            <i class="fas <?= $iconClass ?> mr-2 text-blue-500"></i> <?= ($feature) ?>
+                                        </span>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+
                         <div class="flex justify-between p-4">
                             <a href="view_booking.php?booking_id=<?= $row['booking_id'] ?>" class="text-white bg-blue-500 hover:bg-blue-600 rounded-full px-4 py-2 text-sm">View</a>
                             <form method="POST" action="/myhotelbooking.com/booking/delete_booking.php" onsubmit="return confirm('Are you sure you want to delete this booking?');">

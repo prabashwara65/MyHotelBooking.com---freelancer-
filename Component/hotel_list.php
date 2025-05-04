@@ -25,7 +25,6 @@ if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         echo '<div class="bg-white rounded-lg shadow hover:shadow-xl transition p-4 relative">';
         
-        // Image and badges
         echo '<div class="relative">';
         echo '<img src="' . $row['image_url'] . '" alt="' . $row['hotel_name'] . '" class="rounded-md h-48 w-full object-cover">';
         if ($row['is_best_seller']) {
@@ -51,12 +50,12 @@ if ($result->num_rows > 0) {
 
         echo '<a href="/myhotelbooking.com/hotels/hotel_details.php?id=' . $row['id'] . '" class="mt-4 inline-block text-center bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded w-full text-sm font-medium">View Hotel</a>';
 
-        echo '</div>'; // Close .mt-4
-        echo '</div>'; // Close .hotel-card
+        echo '</div>'; 
+        echo '</div>'; 
     }
 
-    echo '</div>'; // Close grid
-    echo '</div>'; // Close container
+    echo '</div>'; 
+    echo '</div>';
 } else {
     echo "<div class='max-w-4xl mx-auto py-8 text-center text-gray-600 text-lg'>No hotels found.</div>";
 }

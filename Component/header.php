@@ -11,7 +11,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <title>MyHotelBooking</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
+    <!-- Font Awesome cdn-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -48,7 +48,7 @@ if (session_status() == PHP_SESSION_NONE) {
         </div>
     </header>
 
-    <!-- Add logout button style -->
+    <!-- logout button style Css-->
     <style>
     .logout-btn {
         padding: 10px 20px;

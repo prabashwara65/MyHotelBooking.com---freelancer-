@@ -1,26 +1,20 @@
 <?php
 session_start();
-include '../db.php'; // Include your database connection file
+include '../db.php'; 
 
-// Fetch all bookings
+
 $bookings = [];
-// $sql = "SELECT b.*, u.name as user_name, h.hotel_name 
-//         FROM bookings b 
-//         JOIN users u ON b.user_id = u.id 
-//         JOIN hotels h ON b.hotel_id = h.id 
-//         ORDER BY b.created_at DESC";  // SQL query to fetch all bookings
-
 
 $sql = "SELECT * FROM bookings  ORDER BY booking_date DESC";
 $result = $conn->query($sql);
 
-$result = $conn->query($sql);  // Execute the query
+$result = $conn->query($sql);  
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $bookings[] = $row;  // Store the result in the $bookings array
+        $bookings[] = $row;  
     }
 } else {
-    $bookings = [];  // If no bookings are found, set the array as empty
+    $bookings = [];  
 }
 ?>
 
@@ -35,6 +29,7 @@ if ($result->num_rows > 0) {
     <div class="max-w-7xl mx-auto bg-white rounded-lg shadow p-6">
      
         <h1 class="text-2xl font-bold mb-6">All Hotel Bookings</h1>
+        
         <!-- Table displaying the bookings -->
         <table class="min-w-full divide-y divide-gray-200">
             <thead>

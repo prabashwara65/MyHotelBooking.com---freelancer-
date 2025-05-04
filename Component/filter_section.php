@@ -42,11 +42,9 @@
 
 <!-- Hotel List Section -->
 <div id="hotel-list" class="hotel-list">
-    <!-- Hotels will be dynamically loaded here -->
 </div>
 
 <script>
-// JavaScript for handling filter application and AJAX request
 let filters = {
     price_range: '',
     rating: '',
@@ -55,15 +53,14 @@ let filters = {
 };
 
 function applyFilter(filterName, filterValue) {
-    // Update the filters object with the selected value
     filters[filterName] = filterValue;
 
-    // Call the function to update the hotel list based on the filters
     fetchHotels();
 }
 
 function resetFilters() {
-    // Reset the filters object
+
+    // Reset the filters 
     filters = {
         price_range: '',
         rating: '',
@@ -76,19 +73,15 @@ function resetFilters() {
         button.classList.remove('active');
     });
 
-    // Fetch hotels with no filters applied
     fetchHotels();
 }
 
 function fetchHotels() {
-    // Create the query string based on the filters
     const queryParams = new URLSearchParams(filters).toString();
 
-    // Send the AJAX request using fetch
     fetch(`/myhotelbooking.com/hotels/hotels.php?${queryParams}`)
-        .then(response => response.json())  // Parse the response as JSON
+        .then(response => response.json())  
         .then(data => {
-            // Handle the hotel data and display it in the hotel list
             displayHotels(data);
         })
         .catch(error => {
@@ -98,14 +91,13 @@ function fetchHotels() {
 
 function displayHotels(hotels) {
     const hotelListContainer = document.getElementById('hotel-list');
-    hotelListContainer.innerHTML = '';  // Clear the current list
+    hotelListContainer.innerHTML = '';  
 
     if (hotels.length === 0) {
         hotelListContainer.innerHTML = '<p>No hotels found for the selected filters.</p>';
         return;
     }
 
-    // Loop through the hotels and generate HTML
     hotels.forEach(hotel => {
         const hotelItem = document.createElement('div');
         hotelItem.classList.add('hotel-item');
@@ -120,6 +112,5 @@ function displayHotels(hotels) {
     });
 }
 
-// Initial load of hotels (without filters)
 fetchHotels();
 </script>

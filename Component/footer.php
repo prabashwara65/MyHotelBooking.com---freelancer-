@@ -1,7 +1,9 @@
+
+<!-- Footer -->
 <footer class="bg-black text-gray-400 px-6 py-12 mt-6">
   <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
     
-    <!-- Column 1: Company -->
+    <!-- Company Column-->
     <div>
       <h3 class="text-white text-lg font-semibold mb-4">Company</h3>
       <ul class="space-y-2">
@@ -12,7 +14,7 @@
       </ul>
     </div>
 
-    <!-- Column 2: Support -->
+    <!-- Support Column -->
     <div>
       <h3 class="text-white text-lg font-semibold mb-4">Support</h3>
       <ul class="space-y-2">
@@ -23,7 +25,7 @@
       </ul>
     </div>
 
-    <!-- Column 3: Follow Us -->
+    <!--  Follow Us Column-->
     <div>
       <h3 class="text-white text-lg font-semibold mb-4">Follow Us</h3>
       <ul class="space-y-2">
@@ -34,7 +36,7 @@
       </ul>
     </div>
 
-    <!-- Column 4: Contact -->
+    <!-- Contact Column-->
     <div>
       <h3 class="text-white text-lg font-semibold mb-4">Contact</h3>
       <ul class="space-y-2">
@@ -46,7 +48,6 @@
 
   </div>
 
-  <!-- Bottom -->
   <div class="mt-10 text-center border-t border-gray-700 pt-6 text-sm text-gray-500">
     &copy; 2025 <span class="text-white font-medium">MyHotelBooking</span>. All rights reserved.
   </div>

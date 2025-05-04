@@ -25,6 +25,7 @@ if ($result->num_rows > 0): ?>
                         <td class="p-2 border"><?= htmlspecialchars($row['email']) ?></td>
                         <td class="p-2 border"><?= htmlspecialchars($row['role']) ?></td>
                         <td class="p-2 border">
+                            
                             <!-- Edit Button -->
                             <a href="/myhotelbooking.com/Auth/edit_user.php?id=<?= $row['id'] ?>" class="bg-blue-500 text-white text-sm px-4 py-2 rounded hover:bg-blue-600 mr-2">Edit</a>
 

@@ -114,20 +114,20 @@ $featureIcons = [
                             <?php endforeach; ?>
                         </div>
 
-                <!-- Bottom Buttons -->
-                <div class="flex justify-center items-center p-4 border-t mt-auto">
-                    <!--  -->
+                    <!-- Bottom Buttons -->
+                    <div class="flex justify-center items-center p-4 border-t mt-auto">
+                        <!--  -->
 
-                    <form method="POST" action="/myhotelbooking.com/booking/delete_booking.php"
-                        onsubmit="return confirm('Are you sure you want to delete this booking?');">
-                        <input type="hidden" name="booking_id" value="<?= $row['booking_id'] ?>">
-                        <button type="submit"
-                                class="text-white bg-red-500 hover:bg-red-600 rounded-full px-4 py-2 text-sm">
-                            Cancel Booking
-                        </button>
-                    </form>
+                        <form method="POST" action="/myhotelbooking.com/booking/delete_booking.php"
+                            onsubmit="return confirm('Are you sure you want to delete this booking?');">
+                            <input type="hidden" name="booking_id" value="<?= $row['booking_id'] ?>">
+                            <button type="submit"
+                                    class="text-white bg-red-500 hover:bg-red-600 rounded-full px-4 py-2 text-sm">
+                                Cancel Booking
+                            </button>
+                        </form>
+                    </div>
                 </div>
-            </div>
 
             <?php endwhile; ?>
         <?php else: ?>

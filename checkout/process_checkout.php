@@ -1,12 +1,14 @@
 <?php
-session_start(); // Start the session
-ob_start(); // Enable output buffering
+session_start(); 
+ob_start(); 
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-include '../db.php'; // Database connection
+// Database connection
+include '../db.php'; 
+
 
 // Retrieve the customer details from the session
 $customerName = $_SESSION['name'] ?? null;
@@ -24,11 +26,11 @@ $cardholderName = filter_var($_POST['cardholder_name'], FILTER_SANITIZE_STRING);
 $billingAddress = filter_var($_POST['billing_address'], FILTER_SANITIZE_STRING);
 $qtyRooms = filter_var($_POST['qtyRooms'], FILTER_SANITIZE_STRING);
 
-// Check if 'selected_features' are sent and sanitize the data
+
 if (isset($_POST['selected_features'])) {
-    $selectedFeatures = $_POST['selected_features'];  // An array of features
+    $selectedFeatures = $_POST['selected_features'];  
 } else {
-    $selectedFeatures = []; // If no features are selected, set to an empty array
+    $selectedFeatures = []; 
 }
 
 // Convert the features array to a JSON string
@@ -41,10 +43,11 @@ if ($featuresJson === false) {
     exit();
 }
 
-// If no features selected, we can assign null or an empty string based on your database design
+
 if (empty($selectedFeatures)) {
-    $featuresJson = null;  // or you can use `""` (empty string), depending on your database schema
+    $featuresJson = null;  
 }
+
 // Format and validate the check-in and check-out dates
 $checkInDate = date('Y-m-d', strtotime($_POST['check_in_date']));
 $checkOutDate = date('Y-m-d', strtotime($_POST['check_out_date']));
@@ -61,11 +64,11 @@ if (!DateTime::createFromFormat('Y-m-d', $checkOutDate)) {
     exit();
 }
 
-// Debugging: Check if dates are being correctly formatted
+
 echo "<p><strong>Check-in Date:</strong> $checkInDate</p>";
 echo "<p><strong>Check-out Date:</strong> $checkOutDate</p>";
 
-// Show received values (for debugging or confirmation)
+// Show received values 
 echo "<h3>Received Booking Information</h3>";
 echo "<p><strong>Hotel ID:</strong> $hotelId</p>";
 echo "<p><strong>Name:</strong> $customerName</p>";
@@ -81,7 +84,7 @@ echo "<p><strong>Cardholder Name:</strong> $cardholderName</p>";
 echo "<p><strong>Billing Address:</strong> $billingAddress</p>";
 echo "<p><strong>Features:</strong> $featuresJson</p>";
 
-// Prepare the SQL query
+// SQL query
 $stmt = $conn->prepare("INSERT INTO bookings (
     hotel_id, customer_name, customer_email, card_number, exp_date, cvv, cardholder_name, billing_address,
     check_in_date, check_out_date, nights, roomType, qtyRooms, total, features, booking_date
@@ -112,7 +115,7 @@ $stmt->bind_param("isssssssssiiids",
 );
 
 if ($stmt->execute()) {
-    $bookingId = $stmt->insert_id; // ✅ Get the last inserted ID
+    $bookingId = $stmt->insert_id; 
     $_SESSION['success_message'] = "Booking added successfully! (Booking ID: $bookingId)";
     $stmt->close();
     $conn->close();

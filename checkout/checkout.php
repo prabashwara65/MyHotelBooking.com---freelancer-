@@ -38,8 +38,6 @@ $roomType = $_GET['roomType'] ?? null;
 $total = $_GET['total'] ?? null;
 $nights = $_GET['nights'] ?? null; 
 $qtyRooms = $_GET['qtyRooms'] ?? null;
-// $CheckInDate = $_GET['check_in_date'] ?? null; 
-// $CheckOutDate = $_GET['check_out_date'] ?? null;
 
 
 $sql = "SELECT * FROM hotels WHERE id = $hotelId";
@@ -58,7 +56,7 @@ foreach ($roomTypes as $room) {
     $roomDetails[trim($room)] = [
         'description' => 'A cozy and modern room with top-notch amenities for your comfort.',
         'features' => ['Free High-Speed WiFi', 'rooftop infinity pool', '4 restaurants & bars', 'eforea spa', '24/7 fitness center','concierge service','business center','kids club'],
-        'price' => rand(150, 300) // AED
+        'price' => rand(150, 300) 
     ];
 }
 
@@ -74,23 +72,20 @@ if (!$hotelId || !$roomType || !$total) {
     die("Missing booking data.");
 }
 
-// ✅ Get hotel details including the image URL from DB
+
 $sql = "SELECT * FROM hotels WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $hotelId);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Check if the hotel exists
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
 
-    // Check if image_url is set and not empty
     if (isset($row['image_url']) && !empty($row['image_url'])) {
-        $hotelImageURL = $row['image_url']; // Assuming 'image_url' column stores the URL
+        $hotelImageURL = $row['image_url']; 
     } else {
-        // Set a default image or handle the case where there is no image URL
-        $hotelImageURL = 'path/to/default/image.jpg'; // Default fallback image
+        $hotelImageURL = 'path/to/default/image.jpg'; 
     }
 } else {
     die("Hotel not found.");
@@ -100,7 +95,7 @@ if ($result->num_rows > 0) {
 
 <div class="flex flex-row gap-6 px-6 py-10">
 
-  <!-- First Card: Payment Form -->
+  <!-- Payment Form -->
   <div class="w-2/3 bg-white rounded-2xl shadow-lg p-8">
     <h2 class="text-2xl font-semibold mb-6 text-gray-800">Card Payment Details</h2>
 
@@ -153,7 +148,7 @@ if ($result->num_rows > 0) {
         <textarea name="billing_address" rows="3" class="w-full border border-gray-300 rounded-lg p-3" required></textarea>
       </div>
 
-      <!-- New Section: Date Picker -->
+      <!-- Date Picker Section -->
         <div class="mt-6 border-t pt-4 space-y-2">
         <div class="flex flex-row gap-4">
             <div class="flex-1">
@@ -194,7 +189,7 @@ if ($result->num_rows > 0) {
     </form>
   </div>
 
-  <!-- Second Card: Booking Summary -->
+  <!-- Booking Summary -->
 <div class="w-1/3 bg-white rounded-2xl shadow-lg p-6 flex flex-col justify-between">
   <div>
     <!-- Display the hotel image -->
@@ -229,7 +224,7 @@ if ($result->num_rows > 0) {
     </p>
 </div>
 
-<!-- Feather icons script (make sure this is included on your page) -->
+
 <script>
     feather.replace();
 </script>
@@ -246,7 +241,6 @@ if ($result->num_rows > 0) {
   </div>
 </div>
 
-<!-- JavaScript to Auto-Fill Check-in Date -->
 <script>
   // Get today's date in YYYY-MM-DD format
   const today = new Date().toISOString().split('T')[0];

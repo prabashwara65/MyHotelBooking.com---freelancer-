@@ -18,7 +18,7 @@ $email_err = $password_err = "";
 
 // Handle the form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
+
     // Validate email
     if (empty(trim($_POST["email"]))) {
         $email_err = "Please enter your email.";
@@ -35,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // If there are no errors, attempt to log the user in
     if (empty($email_err) && empty($password_err)) {
+
         // Prepare a SQL query to check the user's credentials
         $sql = "SELECT id, name, email, role , password FROM users WHERE email = ?";
 
@@ -51,6 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Check if the email exists in the database
                 if ($stmt->num_rows == 1) {
+
                     // Bind the result to variables
                     $stmt->bind_result($id, $name, $email, $role,  $stored_password);
 
@@ -74,7 +76,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 header("Location: /myhotelbooking.com/dashboard/dashboard.php");
                                 exit;
                             } else {
-                                // Optional: handle other roles or unknown roles
                                 echo "Access denied. Unknown role.";
                                 exit;
                             }
@@ -89,7 +90,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "Oops! Something went wrong. Please try again later.";
             }
 
-            // Close the statement
             $stmt->close();
         }
     }
@@ -112,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="flex min-h-screen">
 
-       <!-- Blue Card on the Left -->
+       <!-- Blue Card  -->
         <div class="flex-1 bg-[#3D34C4] text-white p-10 flex">
             <div>
                 <h2 class="text-4xl font-bold mb-4">Welcome Back!</h2>
@@ -126,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
 
-        <!-- Login Card on the Right -->
+        <!-- Login Card  -->
         <div class="flex-1 bg-white p-8 shadow-lg rounded-lg flex justify-center items-center">
             <div class="max-w-md w-full">
                 <h2 class="text-2xl font-semibold text-center mb-6">Login to Your Account</h2>

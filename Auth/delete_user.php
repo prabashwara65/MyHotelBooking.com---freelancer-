@@ -8,7 +8,8 @@ if (isset($_POST['user_id'])) {
     $stmt->bind_param('i', $user_id);
     $stmt->execute();
 
-    header("Location: /myhotelbooking.com/dashboard/dashboard.php"); // Redirect back to the users list
+     // Redirect back to the users list
+    header("Location: /myhotelbooking.com/dashboard/dashboard.php");
     exit;
 }
 ?>

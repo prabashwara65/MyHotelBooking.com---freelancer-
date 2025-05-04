@@ -9,6 +9,7 @@ if (isset($_GET['id'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
     // Handle form submission and update the user in the database
     $name = $_POST['name'];
     $email = $_POST['email'];
@@ -19,7 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param('sssi', $name, $email, $role, $user_id);
     $stmt->execute();
 
-    header("Location: /myhotelbooking.com/dashboard/dashboard.php"); // Redirect back to the users list
+    // Redirect back to the users list
+    header("Location: /myhotelbooking.com/dashboard/dashboard.php"); 
     exit;
 }
 ?>

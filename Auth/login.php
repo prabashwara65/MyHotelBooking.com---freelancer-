@@ -18,6 +18,7 @@ $email_err = $password_err = "";
 
 // Handle the form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
     // Validate email
     if (empty(trim($_POST["email"]))) {
         $email_err = "Please enter your email.";

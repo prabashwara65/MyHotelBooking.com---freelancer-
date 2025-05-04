@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $name = $conn->real_escape_string($_POST['name']);
   $email = $conn->real_escape_string($_POST['email']);
   $phone = $conn->real_escape_string($_POST['phone']);
-  $password = $_POST['password']; // ⚠️ Store hashed password in production
+  $password = $_POST['password']; 
 
   $sql = "INSERT INTO users (name, email, phone, password) VALUES (?, ?, ?, ?)";
   $stmt = $conn->prepare($sql);

@@ -189,7 +189,7 @@ if ($result->num_rows > 0) {
          </div>
 
       <button type="submit" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold w-full">
-        Complete Payment
+        Complete Booking
       </button>
     </form>
   </div>

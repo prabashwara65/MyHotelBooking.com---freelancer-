@@ -68,6 +68,13 @@ if ($_SESSION["role"] !== 'admin') {
         <?php endif; ?>
 
         <h1 class="text-2xl font-bold">Dashboard</h1>
+
+           <!-- Add New Hotel Button -->
+        <div class="flex justify-end m-4 pr-2">
+            <a href="/myhotelbooking.com/hotels/add_hotel.php" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 shadow">
+                + Add New Hotel
+            </a>
+        </div>
         <div class="flex items-center">
             <?php if (isset($_SESSION['name'])): ?>
                 <span class="text-gray-600 font-medium mr-4">Welcome, <?= htmlspecialchars($_SESSION['name']) ?></span>

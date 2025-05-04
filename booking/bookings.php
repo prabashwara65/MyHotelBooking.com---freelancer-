@@ -74,45 +74,45 @@ $featureIcons = [
                 }
                 ?>
 
-<div class="bg-white rounded-xl shadow-md overflow-hidden flex flex-col h-full">
-    <!-- Image and main content -->
-    <div class="flex flex-col sm:flex-row flex-grow">
-        <!-- Hotel Image -->
-        <div class="sm:w-40 p-4">
-            <img src="<?= htmlspecialchars($hotel_image) ?>" alt="Hotel Image"
-                 class="rounded-md object-cover w-full h-40">
-                 </div>
+            <div class="bg-white rounded-xl shadow-md overflow-hidden flex flex-col h-full">
+                <!-- Image and main content -->
+                <div class="flex flex-col sm:flex-row flex-grow">
+                    <!-- Hotel Image -->
+                    <div class="sm:w-40 p-4">
+                        <img src="<?= htmlspecialchars($hotel_image) ?>" alt="Hotel Image"
+                            class="rounded-md object-cover w-full h-40">
+                            </div>
 
-                    <!-- Booking Details -->
-                    <div class="flex-1 p-4 space-y-2">
-                        <h3 class="text-lg font-semibold text-gray-800">Customer: <?= htmlspecialchars($row['customer_name']) ?></h3>
-                        <p class="text-sm text-gray-600"><strong>Booking ID:</strong> <?= $row['booking_id'] ?></p>
-                        <p class="text-sm text-gray-600"><strong>Hotel ID:</strong> <?= $row['hotel_id'] ?></p>
-                        <p class="text-sm text-gray-600"><strong>Email:</strong> <?= htmlspecialchars($row['customer_email']) ?></p>
-                        <p class="text-sm text-gray-600"><strong>Room:</strong> <?= htmlspecialchars($row['roomType']) ?></p>
-                        <p class="text-sm text-gray-600"><?= $row['qtyRooms'] ?> room(s) for <?= $row['nights'] ?> night(s)</p>
-                        <p class="text-sm text-gray-600"><strong>Check-in:</strong> <?= $row['check_in_date'] ?></p>
-                        <p class="text-sm text-gray-600"><strong>Check-out:</strong> <?= $row['check_out_date'] ?></p>
-                        <p class="text-sm text-gray-600"><strong>Total:</strong> $<?= number_format($row['total'], 2) ?></p>
-                        <hr class="my-2">
-                        <p class="text-sm text-gray-600"><strong>Cardholder:</strong> <?= htmlspecialchars($row['cardholder_name']) ?></p>
-                        <p class="text-sm text-gray-600"><strong>Billing Address:</strong> <?= htmlspecialchars($row['billing_address']) ?></p>
-                        <p class="text-xs text-gray-500">Booked on <?= $row['booking_date'] ?></p>
-                    </div>
-                </div>
+                            <!-- Booking Details -->
+                            <div class="flex-1 p-4 space-y-2">
+                                <h3 class="text-lg font-semibold text-gray-800">Customer: <?= htmlspecialchars($row['customer_name']) ?></h3>
+                                <p class="text-sm text-gray-600"><strong>Booking ID:</strong> <?= $row['booking_id'] ?></p>
+                                <p class="text-sm text-gray-600"><strong>Hotel ID:</strong> <?= $row['hotel_id'] ?></p>
+                                <p class="text-sm text-gray-600"><strong>Email:</strong> <?= htmlspecialchars($row['customer_email']) ?></p>
+                                <p class="text-sm text-gray-600"><strong>Room:</strong> <?= htmlspecialchars($row['roomType']) ?></p>
+                                <p class="text-sm text-gray-600"><?= $row['qtyRooms'] ?> room(s) for <?= $row['nights'] ?> night(s)</p>
+                                <p class="text-sm text-gray-600"><strong>Check-in:</strong> <?= $row['check_in_date'] ?></p>
+                                <p class="text-sm text-gray-600"><strong>Check-out:</strong> <?= $row['check_out_date'] ?></p>
+                                <p class="text-sm text-gray-600"><strong>Total:</strong> $<?= number_format($row['total'], 2) ?></p>
+                                <hr class="my-2">
+                                <p class="text-sm text-gray-600"><strong>Cardholder:</strong> <?= htmlspecialchars($row['cardholder_name']) ?></p>
+                                <p class="text-sm text-gray-600"><strong>Billing Address:</strong> <?= htmlspecialchars($row['billing_address']) ?></p>
+                                <p class="text-xs text-gray-500">Booked on <?= $row['booking_date'] ?></p>
+                            </div>
+                        </div>
 
-                <!-- Features Section -->
-                <div class="features px-4 py-2 flex flex-wrap gap-2 border-t">
-                    <?php
-                    foreach ($features as $feature):
-                        $feature = strtolower(trim($feature));
-                        $iconClass = $featureIcons[$feature] ?? 'fa-check-circle';
-                    ?>
-                        <span class="inline-flex items-center bg-gray-100 text-gray-700 text-xs font-medium px-2 py-1 rounded-full">
-                            <i class="fas <?= $iconClass ?> mr-1"></i> <?= htmlspecialchars($feature) ?>
-                        </span>
-                    <?php endforeach; ?>
-                </div>
+                        <!-- Features Section -->
+                        <div class="features px-4 py-2 flex flex-wrap gap-2 border-t">
+                            <?php
+                            foreach ($features as $feature):
+                                $feature = strtolower(trim($feature));
+                                $iconClass = $featureIcons[$feature] ?? 'fa-check-circle';
+                            ?>
+                                <span class="inline-flex items-center bg-gray-100 text-gray-700 text-xs font-medium px-2 py-1 rounded-full">
+                                    <i class="fas <?= $iconClass ?> mr-1"></i> <?= htmlspecialchars($feature) ?>
+                                </span>
+                            <?php endforeach; ?>
+                        </div>
 
                 <!-- Bottom Buttons -->
                 <div class="flex justify-center items-center p-4 border-t mt-auto">
